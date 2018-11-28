@@ -1,0 +1,74 @@
+//
+//  PrefixHeader.pch
+//  CarServiceDemo
+//
+//  Created by lj on 2018/8/1.
+//  Copyright © 2018年 com.from. All rights reserved.
+//
+
+#ifndef PrefixHeader_pch
+#define PrefixHeader_pch
+
+#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
+
+#ifdef Release
+#import "SafeObject.h"//数组防空
+#endif
+
+typedef enum : NSUInteger {
+    AlertViewSelectStateCancel = 0,// 取消
+    AlertViewSelectStateConfirm = 1,// 确定
+} AlertViewSelectState;
+
+
+typedef enum : NSInteger{
+    SexOther,//未知
+    SexMan,//男
+    SexFemalse,//女
+}Sex;
+
+typedef NS_ENUM(NSUInteger, ConfigureBuildType) {
+    ConfigureBuildTypeTesting=0, ///测试环境
+    ConfigureBuildTypeAcceptance, ///验收环境
+    ConfigureBuildTypeOfficial,   ///正式环境
+};
+
+#import <IQKeyboardManager/IQKeyboardManager.h>
+#import <SDCycleScrollView/SDCycleScrollView.h>
+
+#import "UIColor+HexString.h"
+#import "MBProgressHUD+Add.h"
+#import "NSString+Extension.h"
+#import "UIImageView+Extension.h"
+#import "MBProgressHUD+Add.h"
+#import "UIView+Extension.h"
+#import "UIImage+Thumb.h"
+#import <SDWebImage/UIButton+WebCache.h>
+#import "UIButton+EnlargeEdge.h"
+#import "Masonry.h"
+#import "ValidateUtil.h"
+#import "UserInfo.h"
+#import "NetWorkingUtil.h"
+#import "QMBaseVC.h"
+#import "MJRefresh.h"
+#import "JSONModel.h"
+#import "QMTableVC.h"
+#import "WKConst.h"
+#import "HostUtil.h"
+#import "UIColor+Extension.h"
+#import "QMNoDataTableViewCell.h"
+#import "HJCornerRadius.h"
+#import "TableRefresher.h"
+#import "AppDelegate.h"
+#import "NavigationController.h"
+#import "WSDatePickerView.h"
+#import "UniversalSelectionBoxView.h"
+#import "QMWebViewVC.h"
+#import "ConfirmAndCancelAlertWebView.h"
+#import "ConfirmAndCancelWithTitleImageAlertView.h"
+#import "OnlyConfirmWithTitleImageAlertView.h"
+
+#endif /* PrefixHeader_pch */
+
+

@@ -1,0 +1,19 @@
+//
+//  MyAddressManager.h
+//  CarServiceDemo
+//
+//  Created by xiejun on 2018/8/9.
+//  Copyright © 2018年 com.from. All rights reserved.
+//
+
+#import <Foundation/Foundation.h>
+@class MyAddressModel;
+
+@interface MyAddressManager : NSObject
+
++ (void)getMyAddressListDataIsDefault:(BOOL)isDefault successBlock:(GetBackArrayMBlock)success failBlock:(GetFailBlock)fail;
+- (void)addMyAddressWithModel:(MyAddressModel*)model successBlock:(GetBackBoolBlock)success failBlock:(GetFailBlock)fail;
+- (void)editeMyAddressWithModel:(MyAddressModel*)model successBlock:(GetBackBoolBlock)success failBlock:(GetFailBlock)fail;
+- (void)cancenlMyAddressWithID:(NSString*)ID successBlock:(GetBackBoolBlock)success failBlock:(GetFailBlock)fail;
+
+@end

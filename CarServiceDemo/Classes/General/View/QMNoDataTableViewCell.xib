@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="330" id="KGk-i7-Jjw" customClass="QMNoDataTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="479.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2sV-d2-Qkg">
+                        <rect key="frame" x="16" y="150" width="288" height="180"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" semanticContentAttribute="playback" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="defaultImage" translatesAutoresizingMaskIntoConstraints="NO" id="UDD-uP-uFS">
+                                <rect key="frame" x="82" y="0.0" width="125" height="105"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="125" id="Aaz-dZ-l2R"/>
+                                    <constraint firstAttribute="height" constant="105" id="ZwA-n0-wS2"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="暂无数据" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sA3-sd-bnA">
+                                <rect key="frame" x="0.0" y="125" width="288" height="19.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="sA3-sd-bnA" secondAttribute="trailing" id="3WT-mS-Y1v"/>
+                            <constraint firstAttribute="height" constant="180" id="BV1-95-8Kr"/>
+                            <constraint firstItem="UDD-uP-uFS" firstAttribute="centerX" secondItem="2sV-d2-Qkg" secondAttribute="centerX" id="HnN-y4-CCg"/>
+                            <constraint firstItem="UDD-uP-uFS" firstAttribute="top" secondItem="2sV-d2-Qkg" secondAttribute="top" id="LsV-zQ-183"/>
+                            <constraint firstItem="sA3-sd-bnA" firstAttribute="top" secondItem="UDD-uP-uFS" secondAttribute="bottom" constant="20" id="MiO-f5-KHF"/>
+                            <constraint firstItem="sA3-sd-bnA" firstAttribute="centerX" secondItem="UDD-uP-uFS" secondAttribute="centerX" id="SzF-8E-eyP"/>
+                            <constraint firstItem="sA3-sd-bnA" firstAttribute="leading" secondItem="2sV-d2-Qkg" secondAttribute="leading" id="uql-O4-XYu"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="2sV-d2-Qkg" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="JpQ-E9-OR8"/>
+                    <constraint firstItem="2sV-d2-Qkg" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="cKq-v3-Cny"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="2sV-d2-Qkg" secondAttribute="trailing" id="hth-Sz-y5Q"/>
+                </constraints>
+            </tableViewCellContentView>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <connections>
+                <outlet property="descLabel" destination="sA3-sd-bnA" id="1E8-Tk-gOX"/>
+                <outlet property="imageV" destination="UDD-uP-uFS" id="Mzg-8Q-nM1"/>
+            </connections>
+            <point key="canvasLocation" x="-158" y="-6"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="defaultImage" width="154" height="154"/>
+    </resources>
+</document>

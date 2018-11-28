@@ -1,0 +1,114 @@
+PODS:
+  - AFNetworking (3.2.1):
+    - AFNetworking/NSURLSession (= 3.2.1)
+    - AFNetworking/Reachability (= 3.2.1)
+    - AFNetworking/Security (= 3.2.1)
+    - AFNetworking/Serialization (= 3.2.1)
+    - AFNetworking/UIKit (= 3.2.1)
+  - AFNetworking/NSURLSession (3.2.1):
+    - AFNetworking/Reachability
+    - AFNetworking/Security
+    - AFNetworking/Serialization
+  - AFNetworking/Reachability (3.2.1)
+  - AFNetworking/Security (3.2.1)
+  - AFNetworking/Serialization (3.2.1)
+  - AFNetworking/UIKit (3.2.1):
+    - AFNetworking/NSURLSession
+  - AMap3DMap (6.5.0):
+    - AMapFoundation (~> 1.5)
+  - AMapFoundation (1.5.5)
+  - AMapLocation (2.6.1):
+    - AMapFoundation (~> 1.4)
+  - AMapNavi (6.4.0):
+    - AMap3DMap (~> 6.4)
+    - AMapFoundation (~> 1.5)
+  - AMapSearch (6.5.0):
+    - AMapFoundation (~> 1.4)
+  - CoconutHUD (0.0.7)
+  - FMDB (2.7.5):
+    - FMDB/standard (= 2.7.5)
+  - FMDB/standard (2.7.5)
+  - GPUImage (0.1.7)
+  - IQKeyboardManager (6.2.0)
+  - JSONModel (1.8.0)
+  - Masonry (1.0.2)
+  - MBProgressHUD (1.1.0)
+  - MJRefresh (3.1.15.7)
+  - PNChart (0.8.9):
+    - UICountingLabel (~> 1.2.0)
+  - SDCycleScrollView (1.75):
+    - SDWebImage (>= 4.0.0)
+  - SDWebImage (4.4.2):
+    - SDWebImage/Core (= 4.4.2)
+  - SDWebImage/Core (4.4.2)
+  - UICountingLabel (1.2.0)
+  - "UITableView+FDTemplateLayoutCell (1.6)"
+  - ZLPhotoBrowser (2.7.4):
+    - GPUImage
+    - SDWebImage
+
+DEPENDENCIES:
+  - AFNetworking (~> 3.2.1)
+  - AMapLocation
+  - AMapNavi
+  - AMapSearch
+  - CoconutHUD (~> 0.0.7)
+  - FMDB (~> 2.7.2)
+  - IQKeyboardManager
+  - JSONModel (~> 1.8.0)
+  - Masonry (~> 1.0.2)
+  - MBProgressHUD (~> 1.1.0)
+  - MJRefresh (~> 3.1.15.7)
+  - PNChart (~> 0.8.9)
+  - SDCycleScrollView
+  - "UITableView+FDTemplateLayoutCell"
+  - ZLPhotoBrowser (~> 2.7.3)
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - AFNetworking
+    - AMap3DMap
+    - AMapFoundation
+    - AMapLocation
+    - AMapNavi
+    - AMapSearch
+    - CoconutHUD
+    - FMDB
+    - GPUImage
+    - IQKeyboardManager
+    - JSONModel
+    - Masonry
+    - MBProgressHUD
+    - MJRefresh
+    - PNChart
+    - SDCycleScrollView
+    - SDWebImage
+    - UICountingLabel
+    - "UITableView+FDTemplateLayoutCell"
+    - ZLPhotoBrowser
+
+SPEC CHECKSUMS:
+  AFNetworking: b6f891fdfaed196b46c7a83cf209e09697b94057
+  AMap3DMap: cbe10cc4302ac3f2817ef4221e1259d7e18d1c2f
+  AMapFoundation: 652bd70ba579f48a98bdf0c74d6e62a89a06ca58
+  AMapLocation: cf024b53dc03663efb4ea4bcce27d4cce58bb97a
+  AMapNavi: 2bc469d0523c2f66a5fcacb6947c7eb745ce9e64
+  AMapSearch: c22d8c98e04aad30615834e567781ec1367c4f36
+  CoconutHUD: fdd24b1759ab1ec71b5943d0f1fd6ae2f5875864
+  FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
+  GPUImage: 733a5f0fab92df9de1c37ba9df520a833ccb406d
+  IQKeyboardManager: 6194101620b73af5e67900b8f89707a99de0b804
+  JSONModel: 02ab723958366a3fd27da57ea2af2113658762e9
+  Masonry: 7c429b56da9d4ee0bbb3ed77a5ea710d6a5df39e
+  MBProgressHUD: e7baa36a220447d8aeb12769bf0585582f3866d9
+  MJRefresh: 697f8ec75ebdbe9207767bb682cf0f51b0d8a41f
+  PNChart: 84774d225c2126ded6c93d4dbe6ae98c3a73c2d2
+  SDCycleScrollView: 884b88f0266dd4708a0e1934975c69cb971707b1
+  SDWebImage: 624d6e296c69b244bcede364c72ae0430ac14681
+  UICountingLabel: 1db4e7d023e1762171eb226d6dff47a7a84f27aa
+  "UITableView+FDTemplateLayoutCell": 5c949b4a5059c404b442926c0e80f81d10a2d66f
+  ZLPhotoBrowser: b666fe8f68edc63dc5c4edccca071885b87553f5
+
+PODFILE CHECKSUM: c65f06da86117af3072ce446fc24beb0c1932b77
+
+COCOAPODS: 1.5.3

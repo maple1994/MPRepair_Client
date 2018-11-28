@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="AnnualInspectionTypeSelectionView">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ppm-0A-Xou">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xwA-lM-eoe">
+                    <rect key="frame" x="47" y="253" width="280" height="181"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GB1-m1-jMk">
+                            <rect key="frame" x="0.0" y="0.0" width="280" height="52"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="年检类型" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ch0-2F-9qC">
+                                    <rect key="frame" x="103.5" y="13.5" width="73.5" height="25"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="25" id="8df-4b-P84"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kFb-BN-aJ6">
+                                    <rect key="frame" x="240" y="0.0" width="40" height="52"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="40" id="9LR-y5-QLV"/>
+                                    </constraints>
+                                    <state key="normal" image="delete_white"/>
+                                    <connections>
+                                        <action selector="coloseBtnAction:" destination="iN0-l3-epB" eventType="touchUpInside" id="6Ca-16-mJT"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                            <color key="backgroundColor" red="0.23529411759999999" green="0.67843137249999996" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstItem="ch0-2F-9qC" firstAttribute="centerX" secondItem="GB1-m1-jMk" secondAttribute="centerX" id="AoX-vn-hPo"/>
+                                <constraint firstAttribute="trailing" secondItem="kFb-BN-aJ6" secondAttribute="trailing" id="F8h-tu-0Wf"/>
+                                <constraint firstItem="kFb-BN-aJ6" firstAttribute="top" secondItem="GB1-m1-jMk" secondAttribute="top" id="Urg-8m-QEV"/>
+                                <constraint firstAttribute="height" constant="52" id="Yho-8c-lGG"/>
+                                <constraint firstAttribute="bottom" secondItem="kFb-BN-aJ6" secondAttribute="bottom" id="ah0-gg-gqu"/>
+                                <constraint firstItem="ch0-2F-9qC" firstAttribute="centerY" secondItem="GB1-m1-jMk" secondAttribute="centerY" id="eMi-a4-h8g"/>
+                            </constraints>
+                        </view>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="请选择年检类型！" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pg0-ju-z6H">
+                            <rect key="frame" x="83" y="71" width="114.5" height="17"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <color key="textColor" red="0.35686274509803922" green="0.35686274509803922" blue="0.35686274509803922" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Lx-ne-1IH">
+                            <rect key="frame" x="18" y="124" width="110.5" height="32"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                            <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <state key="normal" title="自驾年检">
+                                <color key="titleColor" red="0.23529411764705882" green="0.67843137254901964" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            </state>
+                            <state key="selected">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </state>
+                            <connections>
+                                <action selector="typeSelectBtnsAction:" destination="iN0-l3-epB" eventType="touchUpInside" id="I9A-wP-R4h"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sfV-h0-yum">
+                            <rect key="frame" x="153.5" y="124" width="110.5" height="32"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                            <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <state key="normal" title="代驾年检">
+                                <color key="titleColor" red="0.23529411759999999" green="0.67843137249999996" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            </state>
+                            <state key="selected">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </state>
+                            <connections>
+                                <action selector="typeSelectBtnsAction:" destination="iN0-l3-epB" eventType="touchUpInside" id="RKW-Oy-h8U"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="181" id="4NM-Uj-eWj"/>
+                        <constraint firstItem="sfV-h0-yum" firstAttribute="leading" secondItem="1Lx-ne-1IH" secondAttribute="trailing" constant="25" id="54c-qQ-adI"/>
+                        <constraint firstItem="GB1-m1-jMk" firstAttribute="leading" secondItem="xwA-lM-eoe" secondAttribute="leading" id="5zu-v2-Jrs"/>
+                        <constraint firstAttribute="trailing" secondItem="sfV-h0-yum" secondAttribute="trailing" constant="16" id="7UF-Z1-Ouz"/>
+                        <constraint firstAttribute="trailing" secondItem="GB1-m1-jMk" secondAttribute="trailing" id="8r1-8r-BbS"/>
+                        <constraint firstItem="1Lx-ne-1IH" firstAttribute="leading" secondItem="xwA-lM-eoe" secondAttribute="leading" constant="18" id="B9W-MM-hc1"/>
+                        <constraint firstItem="sfV-h0-yum" firstAttribute="centerY" secondItem="1Lx-ne-1IH" secondAttribute="centerY" id="BZm-Aq-oO3"/>
+                        <constraint firstAttribute="width" constant="280" id="bGl-II-tI9"/>
+                        <constraint firstItem="1Lx-ne-1IH" firstAttribute="top" secondItem="pg0-ju-z6H" secondAttribute="bottom" constant="36" id="bxm-4S-eEI"/>
+                        <constraint firstItem="GB1-m1-jMk" firstAttribute="top" secondItem="xwA-lM-eoe" secondAttribute="top" id="cNX-Kt-rnk"/>
+                        <constraint firstItem="sfV-h0-yum" firstAttribute="width" secondItem="1Lx-ne-1IH" secondAttribute="width" id="dnj-PT-T50"/>
+                        <constraint firstItem="pg0-ju-z6H" firstAttribute="top" secondItem="GB1-m1-jMk" secondAttribute="bottom" constant="19" id="rqu-R1-Uvw"/>
+                        <constraint firstItem="pg0-ju-z6H" firstAttribute="centerX" secondItem="xwA-lM-eoe" secondAttribute="centerX" id="v7x-eG-apI"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="Ppm-0A-Xou" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="5vR-xY-hlv"/>
+                <constraint firstItem="Ppm-0A-Xou" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="ESM-YF-Z7c"/>
+                <constraint firstItem="xwA-lM-eoe" firstAttribute="centerX" secondItem="vUN-kp-3ea" secondAttribute="centerX" id="O4S-zv-f7F"/>
+                <constraint firstItem="xwA-lM-eoe" firstAttribute="centerY" secondItem="vUN-kp-3ea" secondAttribute="centerY" id="TEF-ub-r28"/>
+                <constraint firstItem="Ppm-0A-Xou" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="tnu-aE-h3F"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="Ppm-0A-Xou" secondAttribute="bottom" id="ziO-zG-BDG"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <connections>
+                <outlet property="bgView" destination="Ppm-0A-Xou" id="1pf-pu-l47"/>
+                <outlet property="btn1" destination="1Lx-ne-1IH" id="s4P-f8-Wwa"/>
+                <outlet property="btn2" destination="sfV-h0-yum" id="sVW-fn-K5E"/>
+                <outlet property="myContentView" destination="xwA-lM-eoe" id="hJd-NP-62Y"/>
+            </connections>
+            <point key="canvasLocation" x="24.5" y="51.5"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="delete_white" width="16" height="16"/>
+    </resources>
+</document>
