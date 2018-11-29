@@ -19,40 +19,20 @@
 extern BOOL kCurrentState;
 
 @interface TabBarViewController ()<UITabBarControllerDelegate>
-
 @end
 
+
 @implementation TabBarViewController
-
-
-
-- (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item {
-    NSUInteger tabIndex = [tabBar.items indexOfObject:item];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"TabBarDidSelectItemNoti" object:nil userInfo:@{@"TabBarDidSelectItemIndex":@(tabIndex)}];
-    
-    if (![UserInfo userInfo].isLogin && tabIndex == 3) {
-        LoginVC *vc = [[LoginVC alloc] init];
-        NavigationController *nav = [[NavigationController alloc] initWithRootViewController:vc];
-        [self presentViewController:nav animated:true completion:nil];
-    }
-}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
     self.tabBar.barTintColor = [UIColor whiteColor];
-    
     self.delegate = self;
-    
     [self addChildVc:[[HomePageVC alloc] init] title:@"首页" image:@"tab_Home" selectedImage:@"tab_Home_sl"];
-    
     [self addChildVc:[[AnnualInspectionVC alloc] init] title:@"年检" image:@"tab_AnnualInspection" selectedImage:@"tab_AnnualInspection_sl"];
-    
     [self addChildVc:[[ServiceVC alloc] init] title:@"服务" image:@"tab_service" selectedImage:@"tab_service_sl"];
-    
     [self addChildVc:[[MyVC alloc] init] title:@"我的" image:@"tab_my" selectedImage:@"tab_my_sl"];
-
 }
 
 /**
@@ -65,22 +45,29 @@ extern BOOL kCurrentState;
  */
 - (void)addChildVc:(UIViewController *)childVc title:(NSString *)title image:(NSString *)image selectedImage:(NSString *)selectedImage
 {
-   
     childVc.title = title;
     childVc.tabBarItem.image         = [UIImage imageNamed:image];
     childVc.tabBarItem.selectedImage = [[UIImage imageNamed:selectedImage] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    
     NSMutableDictionary *textAttrs                  = [NSMutableDictionary dictionary];
     textAttrs[NSForegroundColorAttributeName]       = [UIColor blackColor];
     NSMutableDictionary *selectTextAttrs            = [NSMutableDictionary dictionary];
     selectTextAttrs[NSForegroundColorAttributeName] = COLOR_RGB(54, 155, 242);
     [childVc.tabBarItem setTitleTextAttributes:textAttrs forState:UIControlStateNormal];
     [childVc.tabBarItem setTitleTextAttributes:selectTextAttrs forState:UIControlStateSelected];
-    
-    
     NavigationController *nav = [[NavigationController alloc] initWithRootViewController:childVc];
-    
     [self addChildViewController:nav];
+}
+
+#pragma mark - UITabBarControllerDelegate
+-(BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController {
+    UINavigationController *nav = (UINavigationController *)viewController;
+    if ([nav.topViewController isKindOfClass: [MyVC class]]) {
+        LoginVC *vc = [[LoginVC alloc] init];
+        NavigationController *nav = [[NavigationController alloc] initWithRootViewController:vc];
+        [self presentViewController:nav animated:true completion:nil];
+        return false;
+    }
+    return true;
 }
 
 

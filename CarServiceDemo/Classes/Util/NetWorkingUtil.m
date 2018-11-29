@@ -84,12 +84,6 @@ static BOOL _alreadyCheckNetwork = NO;
 
 @property(nonatomic,strong)WkPieProgressView *pieProgressView;
 
-@property (nonatomic,weak) NSTimer *refreshTokentimer;
-/**
- *  重新获取token时间，默认20分钟
- */
-@property (nonatomic,assign)NSTimeInterval refreshTokentime;
-
 @end
 //单例实现
 @implementation NetWorkingUtil
@@ -128,7 +122,6 @@ static AFHTTPSessionManager *manager;
         [manager.requestSerializer setHTTPShouldHandleCookies:YES];
         instance = [[super allocWithZone:NULL] init];
         [NetWorkingUtil reach];
-        instance.refreshTokentime =20 * 60;
         ///当前版本号
         Api_version = kCurrentAppVersion;
         
@@ -146,7 +139,6 @@ static AFHTTPSessionManager *manager;
 
 - (id)init {
     if (instance) {
-        instance.refreshTokentime = 20 * 60;
         return instance;
     }
     self = [super init];
@@ -722,27 +714,6 @@ static AFHTTPSessionManager *manager;
         result(nil,-1, NetWorkErrorMsg);
     }];
 }
-
-- (void)refreshToken {
-    NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:self.refreshTokentime target:self selector:@selector(startRefreshToken) userInfo: nil repeats:YES];
-    [[NSRunLoop currentRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
-    self.refreshTokentimer = timer;
-    
-}
-
-- (void)startRefreshToken{
-    [self getDataWithPath:RefreshTokenPath parameters:nil result:^(id obj, int status, NSString *msg) {
-        if(status == 1){
-            
-        }else{
-            [self.refreshTokentimer invalidate];
-            self.refreshTokentimer = nil;
-            [MBProgressHUD showErrorOnView:[UIApplication sharedApplication].keyWindow.rootViewController.view withMessage:@"网络异常，请重新登录！"];
-            [(AppDelegate*)[[UIApplication sharedApplication] delegate] switchRootViewController];
-        }
-    }];
-}
-
 
 @end
 

@@ -88,7 +88,6 @@ typedef void(^NetWorkStateChangeBlcok)(AFNetworkReachabilityStatus status);
  */
 - (void)postDataWithAbsolutePath:(NSString *)path parameters:(NSDictionary *)parameters result:(void (^)(id obj,int  status,NSString *msg))result;
 
-- (void)refreshToken;
 
 @end
 

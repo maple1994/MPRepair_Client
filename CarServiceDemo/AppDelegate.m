@@ -231,14 +231,7 @@
 
 #pragma mark - 登录界面
 - (void)gotoLoginView {
-    UserInfo *user = [UserInfo userInfo];
-    user.token = @"";
-    user.name = @"";
-    user.user_id = @"";
-    if ([[NSFileManager defaultManager] fileExistsAtPath:kUserInfoPath]) {
-        [[NSFileManager defaultManager] removeItemAtPath:kUserInfoPath error:nil];
-        NSLog(@"用户信息删除成功！");
-    }
+    [[UserInfo userInfo] removeUserInfo];
     //延时,因为启动makeKeyAndVisible会调用这里,直接使用会导致window混乱
     dispatch_time_t delayTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.0000000001 * NSEC_PER_SEC));
     
