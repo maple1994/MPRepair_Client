@@ -30,8 +30,6 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:YES animated:NO];
-    self.mobiTF.text = self.user.account;
-    self.verificationCodeTF.text = self.user.password;
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
@@ -43,6 +41,11 @@
     self.title = @"登录";
     [self.mobiTF setValue:[UIColor colorwithHexString:@"0093DD"] forKeyPath:@"_placeholderLabel.textColor"];
     [self.verificationCodeTF setValue:[UIColor colorwithHexString:@"0093DD"] forKeyPath:@"_placeholderLabel.textColor"];
+    NSString *phone = [kUserDefault objectForKey:@"MP_LOGIN_PHONE"];
+    NSString *pwd = [kUserDefault objectForKey:@"MP_LOGIN_PWD"];
+    _mobiTF.text = phone;
+    _verificationCodeTF.text = pwd;
+    
     self.sendVerificationCodeBtn.layer.borderColor = [UIColor colorwithHexString:@"3CADFF"].CGColor;
     self.sendVerificationCodeBtn.layer.borderWidth = 1;
     self.sendVerificationCodeBtn.layer.cornerRadius = 3;
@@ -68,6 +71,8 @@
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
     params[@"phone"] = self.mobiTF.text;
     params[@"password"] = self.verificationCodeTF.text;
+    [kUserDefault setObject:self.mobiTF.text forKey:@"MP_LOGIN_PHONE"];
+    [kUserDefault setObject:self.verificationCodeTF.text forKey:@"MP_LOGIN_PWD"];
     [self.util postDataWithPath:@"/api/login/login/" parameters:params result:^(id obj, int status, NSString *msg) {
         if (status == 1) {
             UserInfo *info = [[UserInfo alloc]initWithDictionary:obj error:nil];
@@ -173,15 +178,18 @@
 
 #pragma mark -- 忘记密码
 - (IBAction)forgetPasswordBtnAction:(UIButton *)sender {
-
     NewUserRegistrationVC *forgetPasswordVC =[[NewUserRegistrationVC alloc]init];
     forgetPasswordVC.isRegistration = NO;
     [self.navigationController pushViewController:forgetPasswordVC animated:YES];
 }
 
 - (IBAction)newUserRegistrationBtnAction:(UIButton *)sender {
-
-    NewUserRegistrationVC *forgetPasswordVC =[[NewUserRegistrationVC alloc]init];
+    NewUserRegistrationVC *forgetPasswordVC = [[NewUserRegistrationVC alloc]init];
+    kWeakSelf(weakSelf);
+    forgetPasswordVC.confirmBlock = ^(NSString *phone, NSString *pwd) {
+        weakSelf.mobiTF.text = phone;
+        weakSelf.verificationCodeTF.text = pwd;
+    };
     forgetPasswordVC.isRegistration = YES;
     [self.navigationController pushViewController:forgetPasswordVC animated:YES];
 }

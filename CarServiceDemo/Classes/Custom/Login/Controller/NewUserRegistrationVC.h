@@ -10,5 +10,7 @@
 
 @interface NewUserRegistrationVC : QMBaseVC
 /// 是否注册
-@property (nonatomic ,assign)BOOL isRegistration;
+@property (nonatomic, assign)BOOL isRegistration;
+/// 注册完的回调
+@property (nonatomic, copy) void (^confirmBlock)(NSString *phone, NSString *pwd);
 @end

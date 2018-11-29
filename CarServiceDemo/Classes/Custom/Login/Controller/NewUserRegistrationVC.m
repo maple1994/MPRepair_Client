@@ -58,7 +58,6 @@
 - (void)setupProperty{
     
     if (self.isRegistration) {// 注册
-        
         self.nameView.hidden = NO;
         self.nameViewHeight.constant = 40;
         self.agreeToTheAgreementView.hidden = NO;
@@ -136,18 +135,7 @@
         [MBProgressHUD showErrorOnView:self.view withMessage:@"请输入新密码!"];
         return;
     }
-    
-//    if ([ValidateUtil isEmptyStr:self.getNewPasswordTF2.text]) {
-//        [MBProgressHUD showErrorOnView:self.view withMessage:@"请确认新密码!"];
-//        return;
-//    }
-    
-//    if (![self.getNewPasswordTF1.text isEqualToString:self.getNewPasswordTF2.text]) {
-//        [MBProgressHUD showErrorOnView:self.view withMessage:@"两次输入的密码不一致!"];
-//        return;
-//    }
-    
-    
+
     [MBProgressHUD showStatusOnView:self.view withMessage:LoadingMsg];
     kWeakSelf(weakSelf);
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
@@ -166,11 +154,11 @@
 
     [self.util postDataWithPath:url parameters:params result:^(id obj, int status, NSString *msg) {
         if (status == 1) {
-            weakSelf.user.account = weakSelf.mobiTF.text;
-            weakSelf.user.password = weakSelf.getNewPasswordTF1.text;
             [MBProgressHUD dismissHUDForView:weakSelf.view withsuccess:msg];
             [weakSelf.navigationController popViewControllerAnimated:YES];
-
+            if (weakSelf.confirmBlock) {
+                weakSelf.confirmBlock(weakSelf.mobiTF.text, weakSelf.getNewPasswordTF1.text);
+            }
         }else{
             [MBProgressHUD dismissHUDForView:weakSelf.view withError:msg];
         }

@@ -33,6 +33,10 @@ extern BOOL kCurrentState;
     [self addChildVc:[[AnnualInspectionVC alloc] init] title:@"年检" image:@"tab_AnnualInspection" selectedImage:@"tab_AnnualInspection_sl"];
     [self addChildVc:[[ServiceVC alloc] init] title:@"服务" image:@"tab_service" selectedImage:@"tab_service_sl"];
     [self addChildVc:[[MyVC alloc] init] title:@"我的" image:@"tab_my" selectedImage:@"tab_my_sl"];
+    for (int i = 0; i < self.childViewControllers.count; i++) {
+        UINavigationController *nav = (UINavigationController *)self.childViewControllers[i];
+        [nav.tabBarItem setTitlePositionAdjustment: UIOffsetMake(0, -4)];
+    }
 }
 
 /**
@@ -49,9 +53,9 @@ extern BOOL kCurrentState;
     childVc.tabBarItem.image         = [UIImage imageNamed:image];
     childVc.tabBarItem.selectedImage = [[UIImage imageNamed:selectedImage] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     NSMutableDictionary *textAttrs                  = [NSMutableDictionary dictionary];
-    textAttrs[NSForegroundColorAttributeName]       = [UIColor blackColor];
+    textAttrs[NSForegroundColorAttributeName]       = [UIColor colorwithHexString:@"#5B5B5B"];
     NSMutableDictionary *selectTextAttrs            = [NSMutableDictionary dictionary];
-    selectTextAttrs[NSForegroundColorAttributeName] = COLOR_RGB(54, 155, 242);
+    selectTextAttrs[NSForegroundColorAttributeName] = [UIColor colorwithHexString:@"#3CADFF"];
     [childVc.tabBarItem setTitleTextAttributes:textAttrs forState:UIControlStateNormal];
     [childVc.tabBarItem setTitleTextAttributes:selectTextAttrs forState:UIControlStateSelected];
     NavigationController *nav = [[NavigationController alloc] initWithRootViewController:childVc];
@@ -61,7 +65,7 @@ extern BOOL kCurrentState;
 #pragma mark - UITabBarControllerDelegate
 -(BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController {
     UINavigationController *nav = (UINavigationController *)viewController;
-    if ([nav.topViewController isKindOfClass: [MyVC class]]) {
+    if ([nav.topViewController isKindOfClass: [MyVC class]] && ![UserInfo userInfo].isLogin) {
         LoginVC *vc = [[LoginVC alloc] init];
         NavigationController *nav = [[NavigationController alloc] initWithRootViewController:vc];
         [self presentViewController:nav animated:true completion:nil];
