@@ -273,7 +273,7 @@
 
 - (IBAction)readingAgreementBtnAction:(UIButton *)sender {
     kWeakSelf(weakSelf);
-    [ConfirmAndCancelAlertWebView confirmAndCancelAlertWebViewWithTitle:@"用户协议" WebUrl:@"https://www.baidu.com" ConfirmBtnIsShow:YES ConfirmBtnTitle:@"同意并继续" ConfirmBtnTitleColor:[UIColor colorWithHexStringToRGB:@"3CADFF"] CancelBtnIsShow:YES CancelBtnTitle:@"不同意" CancelBtnTitleColor:[UIColor colorWithHexStringToRGB:@"9B9B9B"] Handle:^(AlertViewSelectState selectState) {
+    [ConfirmAndCancelAlertWebView confirmAndCancelAlertWebViewWithTitle:@"用户协议" WebUrl:@"http://www.nolasthope.cn/system/useragreement/" ConfirmBtnIsShow:YES ConfirmBtnTitle:@"同意并继续" ConfirmBtnTitleColor:[UIColor colorWithHexStringToRGB:@"3CADFF"] CancelBtnIsShow:YES CancelBtnTitle:@"不同意" CancelBtnTitleColor:[UIColor colorWithHexStringToRGB:@"9B9B9B"] Handle:^(AlertViewSelectState selectState) {
         if (selectState == AlertViewSelectStateConfirm) {
             
             weakSelf.agreeToTheAgreementBtn.selected = NO;

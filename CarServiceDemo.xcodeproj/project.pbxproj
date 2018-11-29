@@ -1216,8 +1216,6 @@
 			isa = PBXGroup;
 			children = (
 				2A7D89CF2111A68E00633CCC /* Controller */,
-				2A7D89D02111A68E00633CCC /* Model */,
-				2A7D89D12111A68E00633CCC /* View */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -1233,20 +1231,6 @@
 				2BFAFF212129C49B0090C896 /* NewUserRegistrationVC.xib */,
 			);
 			path = Controller;
-			sourceTree = "<group>";
-		};
-		2A7D89D02111A68E00633CCC /* Model */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
-		2A7D89D12111A68E00633CCC /* View */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = View;
 			sourceTree = "<group>";
 		};
 		2A7D89D22111A68E00633CCC /* My */ = {

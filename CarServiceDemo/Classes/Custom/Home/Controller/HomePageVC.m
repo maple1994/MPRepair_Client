@@ -12,6 +12,7 @@
 #import <MAMapKit/MAMapKit.h>
 #import <AMapSearchKit/AMapSearchKit.h>
 #import <AMapFoundationKit/AMapFoundationKit.h>
+#import <AMapNaviKit/AMapNaviKit.h>
 #import "MAInfowindowView.h"
 #import "POIAnnotation.h"
 #import "LocationAnnotationView.h"
@@ -77,11 +78,18 @@
 
 ///
 @property (nonatomic ,copy)NSString *selectedRepairShopID;
+@property (nonatomic, strong) AMapNaviCompositeManager *mgr;
 @end
 
 @implementation HomePageVC
 
 #pragma mark -- 懒加载
+- (AMapNaviCompositeManager *) mgr {
+    if (!_mgr) {
+        _mgr = [[AMapNaviCompositeManager alloc] init];
+    }
+    return _mgr;
+}
 - (NSMutableArray *)repairShopInfoDataArr{
     if (!_repairShopInfoDataArr) {
         _repairShopInfoDataArr = [NSMutableArray array];
@@ -191,7 +199,8 @@
     /* 如果只有一个结果，设置其为中心点. */
     if (poiAnnotations.count == 1)
     {
-        [self.mapView setCenterCoordinate:[poiAnnotations[0] coordinate]];
+        POIAnnotation *anno = (POIAnnotation *)poiAnnotations.firstObject;
+        [self.mapView setCenterCoordinate:[anno coordinate]];
     }
     /* 如果有多个结果, 设置地图使所有的annotation都可见. */
     else
@@ -607,66 +616,35 @@
 - (IBAction)gotoMapBtnAction:(UIButton *)sender {
     ///能否打开高德地图
     BOOL flag2 = [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"iosamap://map/"]];
-    
-
-    UIAlertController *AC = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-    
-    if (1) {
-        
-        UIAlertAction *op = [UIAlertAction actionWithTitle:@"苹果地图" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            
-            
-            CLLocationCoordinate2D loc = CLLocationCoordinate2DMake([self.selectRepairShopInfoModel.latitude doubleValue], [self.selectRepairShopInfoModel.longitude doubleValue]);
-            MKMapItem *currentLocation = [MKMapItem mapItemForCurrentLocation];
-            MKMapItem *toLocation = [[MKMapItem alloc] initWithPlacemark:[[MKPlacemark alloc] initWithCoordinate:loc addressDictionary:nil]];
-            toLocation.name = self.selectRepairShopInfoModel.name;
-            [MKMapItem openMapsWithItems:@[currentLocation, toLocation]
-                           launchOptions:@{MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving,
-                                           MKLaunchOptionsShowsTrafficKey: [NSNumber numberWithBool:YES]}];
-            
-        }];
-        
-        [AC addAction:op];
-    }
-    
+    double latitude2 = [self.selectRepairShopInfoModel.latitude doubleValue];
+    double longtitude2 = [self.selectRepairShopInfoModel.longitude doubleValue];
+    NSString *desName = self.selectRepairShopInfoModel.name;
     if (flag2) {
-        
-        UIAlertAction *gaodeMapAction = [UIAlertAction actionWithTitle:@"高德地图" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            NSString *gaodeParameterFormat = @"iosamap://navi?sourceApplication=%@&backScheme=%@&poiname=%@&lat=%f&lon=%f&dev=1&style=2";
-            NSString *urlString = [[NSString stringWithFormat:
-                                    gaodeParameterFormat,
-                                    @"1号养车",
-                                    @"com.from.CarServiceDemo",
-                                    self.selectRepairShopInfoModel.name,
-                                    [self.selectRepairShopInfoModel.latitude doubleValue],
-[self.selectRepairShopInfoModel.longitude doubleValue]] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        NSString *gaodeParameterFormat = @"iosamap://path?sourceApplication=applicationName&sid=BGVIS1&slat=%f&slon=%f&sname=当前位置&did=BGVIS2&dlat=%f&dlon=%f&dname=%@&dev=0&t=0";
+        double latitude1 = self.currentLocation.coordinate.latitude;
+        double longtitude1 = self.currentLocation.coordinate.longitude;
+        NSString *urlString = [NSString stringWithFormat:
+                               gaodeParameterFormat,
+                               latitude1,
+                               longtitude1,
+                               latitude2,
+                               longtitude2,
+                               desName
+                               ];
+        NSCharacterSet *set = [NSCharacterSet URLQueryAllowedCharacterSet];
+        urlString = [urlString stringByAddingPercentEncodingWithAllowedCharacters:set];
+        if (@available(iOS 10.0, *)) {
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:urlString] options:@{} completionHandler:^(BOOL success) {
+            }];
+        } else {
             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:urlString]];
-        }];
-        [AC addAction:gaodeMapAction];
-        
+        }
+    }else {
+        AMapNaviCompositeUserConfig *config = [[AMapNaviCompositeUserConfig alloc] init];
+        AMapNaviPoint *point = [AMapNaviPoint locationWithLatitude:latitude2 longitude:longtitude2];
+        [config setRoutePlanPOIType: AMapNaviRoutePlanPOITypeEnd location:point name:desName POIId:nil];
+        [self.mgr presentRoutePlanViewControllerWithOptions:config];
     }
-    
-    
-    UIAlertAction *op = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-    }];
-    
-    [AC addAction:op];
-    
-    
-    UIPopoverPresentationController *popover = AC.popoverPresentationController;
-    
-    if (popover) {
-        
-        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH*0.5-150, SCREEN_HEIGHT*0.5+50, 0.1, 0.1)];
-        [self.view addSubview:view];
-        
-        popover.sourceView = view;
-        popover.sourceRect = view.bounds;
-        popover.permittedArrowDirections = UIPopoverArrowDirectionAny;
-    }
-    
-    [self presentViewController:AC animated:YES completion:nil];
-    
 }
 
 - (IBAction)gotoDetailsVCBtnAction:(UIButton *)sender {

@@ -356,11 +356,10 @@ static AFHTTPSessionManager *manager;
         [appendParameters setObject:[UserInfo userInfo].timestamp forKey:@"timestamp"];
         [appendParameters setObject:Api_version forKey:@"version"];
         [appendParameters setObject:[UserInfo userInfo].user_id forKey:@"user_id"];
-
-        
+        [appendParameters setObject:@"user" forKey:@"app_type"];
     }
 
-    NSLog(@"path:%@--params:%@",getURL,parameters.description);
+    NSLog(@"path:%@--params:%@",getURL,appendParameters.description);
 
 //    api_version=v1&auth_client=app&page=1&type=sale
     ///AFNet请求数据
@@ -419,9 +418,10 @@ static AFHTTPSessionManager *manager;
         [appendParameters setObject:[UserInfo userInfo].timestamp forKey:@"timestamp"];
         [appendParameters setObject:Api_version forKey:@"version"];
         [appendParameters setObject:[UserInfo userInfo].user_id forKey:@"user_id"];
+        [appendParameters setObject:@"user" forKey:@"app_type"];
     }
     
-    NSLog(@"path:%@--params:%@",postURL,parameters.description);
+    NSLog(@"path:%@--params:%@",postURL,appendParameters.description);
     
     ///AFNet请求数据
     [manager POST:postURL parameters:appendParameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {

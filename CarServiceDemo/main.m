@@ -24,11 +24,11 @@ int main(int argc, char * argv[]) {
         
 #else
         
-//        [HostUtil configureBuildType:ConfigureBuildTypeOfficial];///正式环境
+        [HostUtil configureBuildType:ConfigureBuildTypeOfficial];///正式环境
         
-        //        [HostUtil configureBuildType:ConfigureBuildTypeAcceptance];///验收环境
+//                [HostUtil configureBuildType:ConfigureBuildTypeAcceptance];///验收环境
         //
-                [HostUtil configureBuildType:ConfigureBuildTypeTesting];///测试环境
+//                [HostUtil configureBuildType:ConfigureBuildTypeTesting];///测试环境
 #endif
         
         ///不能切换横竖版了
