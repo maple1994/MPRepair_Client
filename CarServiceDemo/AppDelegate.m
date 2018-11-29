@@ -82,13 +82,11 @@
     
     NSString *installType = [kUserDefault objectForKey:kIsFirstInstall];
     
-    if (![ValidateUtil isEmptyStr:installType]&&[installType isEqualToString:@"1"]){//不是第一次安装,且没有更新
-        
-        [self switchRootViewControllerWithType:RootViewControllerTypeLogin];
-        
+    if (![ValidateUtil isEmptyStr:installType]&&[installType isEqualToString:@"1"]){
+        //不是第一次安装,且没有更新
+        [self switchRootViewControllerWithType: RootViewControllerTypeLogin];
         [self loadScrollViewImage];
     }else{
-        
         UIViewController *emptyView = [[ UIViewController alloc ]init];
         self.window.rootViewController = emptyView;
         [self createLoadingScrollViewWithType:installType];
