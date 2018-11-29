@@ -201,8 +201,6 @@
 		2BB61C2B2125BF0600585C00 /* PackageSelectionCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BB61C292125BF0600585C00 /* PackageSelectionCollectionViewCell.m */; };
 		2BB61C2C2125BF0600585C00 /* PackageSelectionCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2BB61C2A2125BF0600585C00 /* PackageSelectionCollectionViewCell.xib */; };
 		2BB827B1216C531D00636902 /* JPushInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BB827B0216C531D00636902 /* JPushInfoModel.m */; };
-		2BBAEF132152391300C6A002 /* jpush-ios-3.0.2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BBAEF102152391300C6A002 /* jpush-ios-3.0.2.a */; };
-		2BBAEF142152391300C6A002 /* jcore-ios-1.1.1.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BBAEF122152391300C6A002 /* jcore-ios-1.1.1.a */; };
 		2BBAEF16215239BA00C6A002 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BBAEF15215239BA00C6A002 /* CoreFoundation.framework */; };
 		2BBAEF1821523A0C00C6A002 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BBAEF1721523A0B00C6A002 /* AdSupport.framework */; };
 		2BBAEF1A21523A1600C6A002 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BBAEF1921523A1600C6A002 /* UserNotifications.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
@@ -347,6 +345,10 @@
 		36E8144B211852DD006F85D1 /* OrderEvaluateView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 36E8144A211852DD006F85D1 /* OrderEvaluateView.xib */; };
 		36E8144F211879F1006F85D1 /* MyOrderDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 36E8144D211879F1006F85D1 /* MyOrderDetailController.m */; };
 		36E81450211879F1006F85D1 /* MyOrderDetailController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 36E8144E211879F1006F85D1 /* MyOrderDetailController.xib */; };
+		F560B15321AFF9FB009D6E5B /* MPUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = F560B15221AFF9FB009D6E5B /* MPUtils.m */; };
+		F560B15A21B03738009D6E5B /* jpush-extension-ios-1.1.1.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F560B15521B03738009D6E5B /* jpush-extension-ios-1.1.1.a */; };
+		F560B15B21B03738009D6E5B /* jpush-ios-3.1.1.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F560B15621B03738009D6E5B /* jpush-ios-3.1.1.a */; };
+		F560B15C21B03738009D6E5B /* jcore-ios-1.2.5.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F560B15921B03738009D6E5B /* jcore-ios-1.2.5.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -676,9 +678,6 @@
 		2BB61C2A2125BF0600585C00 /* PackageSelectionCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PackageSelectionCollectionViewCell.xib; sourceTree = "<group>"; };
 		2BB827AF216C531D00636902 /* JPushInfoModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JPushInfoModel.h; sourceTree = "<group>"; };
 		2BB827B0216C531D00636902 /* JPushInfoModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JPushInfoModel.m; sourceTree = "<group>"; };
-		2BBAEF102152391300C6A002 /* jpush-ios-3.0.2.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "jpush-ios-3.0.2.a"; sourceTree = "<group>"; };
-		2BBAEF112152391300C6A002 /* JPUSHService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPUSHService.h; sourceTree = "<group>"; };
-		2BBAEF122152391300C6A002 /* jcore-ios-1.1.1.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "jcore-ios-1.1.1.a"; sourceTree = "<group>"; };
 		2BBAEF15215239BA00C6A002 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		2BBAEF1721523A0B00C6A002 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		2BBAEF1921523A1600C6A002 /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
@@ -919,6 +918,13 @@
 		36E8144D211879F1006F85D1 /* MyOrderDetailController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyOrderDetailController.m; sourceTree = "<group>"; };
 		36E8144E211879F1006F85D1 /* MyOrderDetailController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MyOrderDetailController.xib; sourceTree = "<group>"; };
 		BF7AD4F44EDBF53B83591A6B /* Pods-CarServiceDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CarServiceDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CarServiceDemo/Pods-CarServiceDemo.debug.xcconfig"; sourceTree = "<group>"; };
+		F560B15121AFF9FB009D6E5B /* MPUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MPUtils.h; sourceTree = "<group>"; };
+		F560B15221AFF9FB009D6E5B /* MPUtils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MPUtils.m; sourceTree = "<group>"; };
+		F560B15521B03738009D6E5B /* jpush-extension-ios-1.1.1.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "jpush-extension-ios-1.1.1.a"; sourceTree = "<group>"; };
+		F560B15621B03738009D6E5B /* jpush-ios-3.1.1.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "jpush-ios-3.1.1.a"; sourceTree = "<group>"; };
+		F560B15721B03738009D6E5B /* JPushNotificationExtensionService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPushNotificationExtensionService.h; sourceTree = "<group>"; };
+		F560B15821B03738009D6E5B /* JPUSHService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPUSHService.h; sourceTree = "<group>"; };
+		F560B15921B03738009D6E5B /* jcore-ios-1.2.5.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "jcore-ios-1.2.5.a"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -934,16 +940,17 @@
 				2BBAEF16215239BA00C6A002 /* CoreFoundation.framework in Frameworks */,
 				0439907F21454C110068CECA /* CFNetwork.framework in Frameworks */,
 				0439908121454C1A0068CECA /* CoreMotion.framework in Frameworks */,
+				F560B15B21B03738009D6E5B /* jpush-ios-3.1.1.a in Frameworks */,
 				0439907D21454C070068CECA /* Foundation.framework in Frameworks */,
 				0439907721454B210068CECA /* CoreText.framework in Frameworks */,
 				0439907521454B190068CECA /* QuartzCore.framework in Frameworks */,
 				0439907321454ADE0068CECA /* CoreTelephony.framework in Frameworks */,
+				F560B15A21B03738009D6E5B /* jpush-extension-ios-1.1.1.a in Frameworks */,
 				0439907121454AD50068CECA /* SystemConfiguration.framework in Frameworks */,
+				F560B15C21B03738009D6E5B /* jcore-ios-1.2.5.a in Frameworks */,
 				0439906F21454ABF0068CECA /* libc++.tbd in Frameworks */,
 				040979162142C049009E47C9 /* libsqlite3.tbd in Frameworks */,
 				040979142142C041009E47C9 /* libz.tbd in Frameworks */,
-				2BBAEF132152391300C6A002 /* jpush-ios-3.0.2.a in Frameworks */,
-				2BBAEF142152391300C6A002 /* jcore-ios-1.1.1.a in Frameworks */,
 				040979122142C01A009E47C9 /* Security.framework in Frameworks */,
 				04255D8221401177007CD86F /* libWeChatSDK.a in Frameworks */,
 				0F0913F3A5A4D4343F448DC8 /* Pods_CarServiceDemo.framework in Frameworks */,
@@ -1341,7 +1348,7 @@
 		2A7D8A1D2111A68E00633CCC /* Lib */ = {
 			isa = PBXGroup;
 			children = (
-				2BBAEF0F2152391300C6A002 /* JPush-iOS-SDK-3.0.2 */,
+				F560B15421B03738009D6E5B /* JPush-iOS-SDK-3.1.1 */,
 				0402AAC02143AB9B00A17F74 /* ZhifubaoSDK */,
 				04255D7B21401177007CD86F /* WechtSDK1.8.2 */,
 				36ADE7172122BA0D0044256F /* XjAddressPickerView */,
@@ -1414,6 +1421,8 @@
 				2B1A5CFE211A7D5A00852B08 /* NetWorkingUtil.h */,
 				2B1A5CFF211A7D5B00852B08 /* NetWorkingUtil.m */,
 				2B3DB1C12117242E001BCBA6 /* CameraAndPhotosAlbum */,
+				F560B15121AFF9FB009D6E5B /* MPUtils.h */,
+				F560B15221AFF9FB009D6E5B /* MPUtils.m */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -1577,16 +1586,6 @@
 				2B3DB1C52117242E001BCBA6 /* WKImageCropperViewController.h */,
 			);
 			path = CameraAndPhotosAlbum;
-			sourceTree = "<group>";
-		};
-		2BBAEF0F2152391300C6A002 /* JPush-iOS-SDK-3.0.2 */ = {
-			isa = PBXGroup;
-			children = (
-				2BBAEF102152391300C6A002 /* jpush-ios-3.0.2.a */,
-				2BBAEF112152391300C6A002 /* JPUSHService.h */,
-				2BBAEF122152391300C6A002 /* jcore-ios-1.1.1.a */,
-			);
-			path = "JPush-iOS-SDK-3.0.2";
 			sourceTree = "<group>";
 		};
 		2BD615D02112994A00C9EEB6 /* Model */ = {
@@ -2305,6 +2304,18 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		F560B15421B03738009D6E5B /* JPush-iOS-SDK-3.1.1 */ = {
+			isa = PBXGroup;
+			children = (
+				F560B15521B03738009D6E5B /* jpush-extension-ios-1.1.1.a */,
+				F560B15621B03738009D6E5B /* jpush-ios-3.1.1.a */,
+				F560B15721B03738009D6E5B /* JPushNotificationExtensionService.h */,
+				F560B15821B03738009D6E5B /* JPUSHService.h */,
+				F560B15921B03738009D6E5B /* jcore-ios-1.2.5.a */,
+			);
+			path = "JPush-iOS-SDK-3.1.1";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -2759,6 +2770,7 @@
 				2B1A5D09211A7E7700852B08 /* HostUtil.m in Sources */,
 				2A7D8B932111A68F00633CCC /* QMWebViewVC.m in Sources */,
 				2A7D8B7F2111A68F00633CCC /* MBProgressHUD+Add.m in Sources */,
+				F560B15321AFF9FB009D6E5B /* MPUtils.m in Sources */,
 				2A7D8C042111A68F00633CCC /* MSSChineseCalendarManager.m in Sources */,
 				2B335EDB2124178B007620C9 /* AnnualInspectionStationInfoModel.m in Sources */,
 				04FA5281215F62F4000D216C /* MyOrderProjectTableCell.m in Sources */,
@@ -2945,6 +2957,7 @@
 					"$(PROJECT_DIR)/CarServiceDemo/Classes/Lib/JPush-iOS-SDK-3.0.2",
 					"$(PROJECT_DIR)/CarServiceDemo/Classes/Lib/SDK1.6.2",
 					"$(PROJECT_DIR)/CarServiceDemo/Classes/Lib/WechtSDK1.8.2",
+					"$(PROJECT_DIR)/CarServiceDemo/Classes/Lib/JPush-iOS-SDK-3.1.1",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.from.CarService;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2983,6 +2996,7 @@
 					"$(PROJECT_DIR)/CarServiceDemo/Classes/Lib/JPush-iOS-SDK-3.0.2",
 					"$(PROJECT_DIR)/CarServiceDemo/Classes/Lib/SDK1.6.2",
 					"$(PROJECT_DIR)/CarServiceDemo/Classes/Lib/WechtSDK1.8.2",
+					"$(PROJECT_DIR)/CarServiceDemo/Classes/Lib/JPush-iOS-SDK-3.1.1",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.from.CarService;
 				PRODUCT_NAME = "$(TARGET_NAME)";

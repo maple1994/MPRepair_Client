@@ -47,6 +47,10 @@
 @property(nonatomic,copy)NSString *currentCity;
 /// 是否登录
 @property (nonatomic, assign) BOOL isLogin;
+/// 纬度
+@property (nonatomic, assign) double latitude;
+/// 经度
+@property (nonatomic, assign) double longtitude;
 
 /// 序列化
 - (void)serilization;

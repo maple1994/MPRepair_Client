@@ -29,22 +29,6 @@
 
 @implementation AppDelegate
 
-- (TabBarViewController *)tabBarVC {
-    if (!_tabBarVC) {
-        _tabBarVC = [[TabBarViewController alloc] init];
-    }
-    return _tabBarVC;
-}
-
-- (NavigationController *)mainNavC{
-    if (!_mainNavC) {
-        //登录的界面
-        LoginVC *mainVC = [[LoginVC alloc] init];
-        _mainNavC = [[NavigationController alloc] initWithRootViewController:mainVC];
-    }
-    return _mainNavC;
-}
-
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     [IQKeyboardManager sharedManager].enable = YES;
     [IQKeyboardManager sharedManager].shouldResignOnTouchOutside = YES;
@@ -66,7 +50,7 @@
     
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"firstLaunch"];
     
-    QMBaseVC *vc= [[QMBaseVC alloc]init];
+    QMBaseVC *vc= [[QMBaseVC alloc] init];
     vc.view.backgroundColor=[UIColor whiteColor];
     
     UIImageView *imageView = [[UIImageView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
@@ -102,13 +86,10 @@
 - (void)setupOtherSDKWithOptions:(NSDictionary *)launchOptions {
     
     [AMapServices sharedServices].apiKey = @"893cf8537c7f4904b4cf10e0404cb03a";
-    
-    
     UIUserNotificationType type = UIUserNotificationTypeAlert | UIUserNotificationTypeBadge | UIUserNotificationTypeSound;
     //极光注册
     [JPUSHService registerForRemoteNotificationTypes:type categories:nil];
     [JPUSHService  setupWithOption:launchOptions appKey:@"52b368c955e53792d3680657" channel:@"http://www.dalacar.com" apsForProduction: IsProduction];
-    
 }
 
 - (void)loadScrollViewImage{

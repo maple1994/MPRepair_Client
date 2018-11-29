@@ -15,8 +15,6 @@ typedef void(^RootVCCompletionBlock)(void);
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
-@property(nonatomic,strong) TabBarViewController *tabBarVC;
-@property(nonatomic,strong)NavigationController *mainNavC;
 @property(nonatomic,strong)NSDictionary *userInfo;
 /**
  *  切换根控制器

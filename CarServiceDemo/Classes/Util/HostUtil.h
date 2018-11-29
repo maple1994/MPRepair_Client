@@ -29,7 +29,6 @@ typedef NS_ENUM(NSUInteger, WebViewLoadStatus) {
 /// 配置域名的环境
 + (void)configureBuildType:(ConfigureBuildType)buildType;
 
-
 /// 传入子路径(子路径前面不要加“/”) 获取 绝对路劲
 + (NSString*)getAbsoluteUrl:(NSString*)subUrl;
 
