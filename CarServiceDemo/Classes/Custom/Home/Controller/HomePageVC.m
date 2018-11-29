@@ -113,6 +113,12 @@
     [self.search AMapPOIKeywordsSearch:request];
 }
 
+- (void)setCurrentLocation:(MAUserLocation *)currentLocation {
+    _currentLocation = currentLocation;
+    self.user.latitude = _currentLocation.coordinate.latitude;
+    self.user.longtitude = _currentLocation.coordinate.longitude;
+}
+
 #pragma mark - MapViewDelegate
 
 - (void)mapView:(MAMapView *)mapView didSelectAnnotationView:(MAAnnotationView *)view
@@ -575,37 +581,12 @@
 
 
 - (IBAction)gotoMapBtnAction:(UIButton *)sender {
-    ///能否打开高德地图
-    BOOL flag2 = [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"iosamap://map/"]];
     double latitude2 = [self.selectRepairShopInfoModel.latitude doubleValue];
     double longtitude2 = [self.selectRepairShopInfoModel.longitude doubleValue];
     NSString *desName = self.selectRepairShopInfoModel.name;
-    if (flag2) {
-        NSString *gaodeParameterFormat = @"iosamap://path?sourceApplication=applicationName&sid=BGVIS1&slat=%f&slon=%f&sname=当前位置&did=BGVIS2&dlat=%f&dlon=%f&dname=%@&dev=0&t=0";
-        double latitude1 = self.currentLocation.coordinate.latitude;
-        double longtitude1 = self.currentLocation.coordinate.longitude;
-        NSString *urlString = [NSString stringWithFormat:
-                               gaodeParameterFormat,
-                               latitude1,
-                               longtitude1,
-                               latitude2,
-                               longtitude2,
-                               desName
-                               ];
-        NSCharacterSet *set = [NSCharacterSet URLQueryAllowedCharacterSet];
-        urlString = [urlString stringByAddingPercentEncodingWithAllowedCharacters:set];
-        if (@available(iOS 10.0, *)) {
-            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:urlString] options:@{} completionHandler:^(BOOL success) {
-            }];
-        } else {
-            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:urlString]];
-        }
-    }else {
-        AMapNaviCompositeUserConfig *config = [[AMapNaviCompositeUserConfig alloc] init];
-        AMapNaviPoint *point = [AMapNaviPoint locationWithLatitude:latitude2 longitude:longtitude2];
-        [config setRoutePlanPOIType: AMapNaviRoutePlanPOITypeEnd location:point name:desName POIId:nil];
-        [self.mgr presentRoutePlanViewControllerWithOptions:config];
-    }
+    double latitude1 = self.currentLocation.coordinate.latitude;
+    double longtitude1 = self.currentLocation.coordinate.longitude;
+    [MPUtils showNavWithSourceLatitude:latitude1 Sourcelongtitude:longtitude1 desLatitude:latitude2 desLongtitude:longtitude2 desName:desName];
 }
 
 - (IBAction)gotoDetailsVCBtnAction:(UIButton *)sender {

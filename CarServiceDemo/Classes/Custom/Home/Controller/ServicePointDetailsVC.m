@@ -8,6 +8,7 @@
 
 #import "ServicePointDetailsVC.h"
 #import <MapKit/MapKit.h>
+#import <AMapNaviKit/AMapNaviKit.h>
 #import "ScheduledRepairVC.h"
 #import "OrderMaintainController.h"
 
@@ -31,7 +32,7 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *myContentViewBottom;
 
 @property (weak, nonatomic) IBOutlet UIButton *callPhoneBtn;
-
+@property (nonatomic, strong) AMapNaviCompositeManager *mgr;
 
 @end
 
@@ -129,70 +130,21 @@
     return _cycleScrollView;
 }
 
+- (AMapNaviCompositeManager *) mgr {
+    if (!_mgr) {
+        _mgr = [[AMapNaviCompositeManager alloc] init];
+    }
+    return _mgr;
+}
+
 #pragma mark -- 路线导航按钮
 - (IBAction)routeNavigationBtnAction:(UIButton *)sender {
-    ///能否打开高德地图
-    BOOL flag2 = [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"iosamap://map/"]];
-    
-    
-    UIAlertController *AC = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-    
-    if (1) {
-        
-        UIAlertAction *op = [UIAlertAction actionWithTitle:@"苹果地图" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            
-            
-            CLLocationCoordinate2D loc = CLLocationCoordinate2DMake([self.dataModel.latitude doubleValue], [self.dataModel.longitude doubleValue]);
-            MKMapItem *currentLocation = [MKMapItem mapItemForCurrentLocation];
-            MKMapItem *toLocation = [[MKMapItem alloc] initWithPlacemark:[[MKPlacemark alloc] initWithCoordinate:loc addressDictionary:nil]];
-            toLocation.name = self.dataModel.name;
-            [MKMapItem openMapsWithItems:@[currentLocation, toLocation]
-                           launchOptions:@{MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving,
-                                           MKLaunchOptionsShowsTrafficKey: [NSNumber numberWithBool:YES]}];
-            
-        }];
-        
-        [AC addAction:op];
-    }
-    
-    if (flag2) {
-        
-        UIAlertAction *gaodeMapAction = [UIAlertAction actionWithTitle:@"高德地图" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            NSString *gaodeParameterFormat = @"iosamap://navi?sourceApplication=%@&backScheme=%@&poiname=%@&lat=%f&lon=%f&dev=1&style=2";
-            NSString *urlString = [[NSString stringWithFormat:
-                                    gaodeParameterFormat,
-                                    @"1号养车",
-                                    @"yourAppUrlSchema",
-                                    self.dataModel.name,
-                                    [self.dataModel.latitude doubleValue],
-                                    [self.dataModel.longitude doubleValue]] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:urlString]];
-        }];
-        [AC addAction:gaodeMapAction];
-        
-    }
-    
-    
-    UIAlertAction *op = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-    }];
-    
-    [AC addAction:op];
-    
-    
-    UIPopoverPresentationController *popover = AC.popoverPresentationController;
-    
-    if (popover) {
-        
-        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH*0.5-150, SCREEN_HEIGHT*0.5+50, 0.1, 0.1)];
-        [self.view addSubview:view];
-        
-        popover.sourceView = view;
-        popover.sourceRect = view.bounds;
-        popover.permittedArrowDirections = UIPopoverArrowDirectionAny;
-    }
-    
-    [self presentViewController:AC animated:YES completion:nil];
-    
+    double latitude2 = [self.dataModel.latitude doubleValue];
+    double longtitude2 = [self.dataModel.longitude doubleValue];
+    NSString *desName = self.dataModel.name;
+    double latitude1 = self.user.latitude;
+    double longtitude1 = self.user.longtitude;
+    [MPUtils showNavWithSourceLatitude:latitude1 Sourcelongtitude:longtitude1 desLatitude:latitude2 desLongtitude:longtitude2 desName:desName];
 }
 
 #pragma mark -- 联系店家按钮事件

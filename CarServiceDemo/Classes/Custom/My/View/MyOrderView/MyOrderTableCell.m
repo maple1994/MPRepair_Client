@@ -61,68 +61,16 @@
                 }];
             }
         }];
-    }else if (_nowModel.state == MaintainTypeHasReceived||_nowModel.state == MaintainTypeWaitService){
-        ///能否打开高德地图
-        BOOL flag2 = [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"iosamap://map/"]];
-        
-        
-        UIAlertController *AC = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-        
-        if (1) {
-            
-            UIAlertAction *op = [UIAlertAction actionWithTitle:@"苹果地图" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                
-                
-                CLLocationCoordinate2D loc = CLLocationCoordinate2DMake([self.nowModel.latitude doubleValue], [self.nowModel.longitude doubleValue]);
-                MKMapItem *currentLocation = [MKMapItem mapItemForCurrentLocation];
-                MKMapItem *toLocation = [[MKMapItem alloc] initWithPlacemark:[[MKPlacemark alloc] initWithCoordinate:loc addressDictionary:nil]];
-                toLocation.name = self.nowModel.name;
-                [MKMapItem openMapsWithItems:@[currentLocation, toLocation]
-                               launchOptions:@{MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving,
-                                               MKLaunchOptionsShowsTrafficKey: [NSNumber numberWithBool:YES]}];
-                
-            }];
-            
-            [AC addAction:op];
-        }
-        
-        if (flag2) {
-            
-            UIAlertAction *gaodeMapAction = [UIAlertAction actionWithTitle:@"高德地图" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                NSString *gaodeParameterFormat = @"iosamap://navi?sourceApplication=%@&backScheme=%@&poiname=%@&lat=%f&lon=%f&dev=1&style=2";
-                NSString *urlString = [[NSString stringWithFormat:
-                                        gaodeParameterFormat,
-                                        @"1号养车",
-                                        @"yourAppUrlSchema",
-                                        self.nowModel.name,
-                                        [self.nowModel.latitude doubleValue],
-                                        [self.nowModel.longitude doubleValue]] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:urlString]];
-            }];
-            [AC addAction:gaodeMapAction];
-            
-        }
-        
-        UIAlertAction *op = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-        }];
-        
-        [AC addAction:op];
-        
-        
-        UIPopoverPresentationController *popover = AC.popoverPresentationController;
-        
-        if (popover) {
-            
-            UIView *view = [[UIView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH*0.5-150, SCREEN_HEIGHT*0.5+50, 0.1, 0.1)];
-            [self.viewController.view addSubview:view];
-            
-            popover.sourceView = view;
-            popover.sourceRect = view.bounds;
-            popover.permittedArrowDirections = UIPopoverArrowDirectionAny;
-        }
-        
-        [self.viewController presentViewController:AC animated:YES completion:nil];
-        
+    }else if (_nowModel.state ==
+              MaintainTypeHasReceived ||
+              _nowModel.state ==
+              MaintainTypeWaitService){
+        double latitude1 = [UserInfo userInfo].latitude;
+        double longtitude1 = [UserInfo userInfo].longtitude;
+        NSString *desName = self.nowModel.name;
+        double latitude2 = [self.nowModel.latitude doubleValue];
+        double longtitude2 = [self.nowModel.longitude doubleValue];
+        [MPUtils showNavWithSourceLatitude:latitude1 Sourcelongtitude:longtitude1 desLatitude:latitude2 desLongtitude:longtitude2 desName:desName];
     }else if (_nowModel.state == MaintainTypeServiceNow){
         kWeakSelf(weakSelf)
         [OrderManager upkeepOrMaintainEvaluateOrPayActionIsUpkeep:isUpKeep andMethodIsFinish:YES andID:weakSelf.nowModel.ID andScroe:nil successBlock:^(id obj) {
