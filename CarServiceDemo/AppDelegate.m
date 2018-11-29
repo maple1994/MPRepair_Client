@@ -30,12 +30,9 @@
 @implementation AppDelegate
 
 - (TabBarViewController *)tabBarVC {
-    
     if (!_tabBarVC) {
-        
         _tabBarVC = [[TabBarViewController alloc] init];
     }
-    
     return _tabBarVC;
 }
 
@@ -49,8 +46,6 @@
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
-    
     [IQKeyboardManager sharedManager].enable = YES;
     [IQKeyboardManager sharedManager].shouldResignOnTouchOutside = YES;
     [IQKeyboardManager sharedManager].toolbarDoneBarButtonItemText = @"完成";
@@ -68,8 +63,6 @@
         userInfo = self.userInfo;
     }
     self.userInfo = userInfo;
-    
-    //    [[SDImageCache sharedImageCache] clearDisk];
     
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"firstLaunch"];
     
@@ -211,34 +204,23 @@
 #pragma mark - 切换window的显示根控制器
 - (void)switchRootViewControllerWithType:(RootViewControllerType)rootViewControllerType{
     self.rootViewControllerType = rootViewControllerType;
-    if (rootViewControllerType==RootViewControllerTypeTabBar) {
-        
-        
-        //        self.window.rootViewController = nil;
+    if (rootViewControllerType ==
+        RootViewControllerTypeTabBar) {
         self.window.rootViewController = self.tabBarVC;
-        
-        
-        
-    }else if (rootViewControllerType==RootViewControllerTypeLogin) {
-        
+    }else if (rootViewControllerType ==
+              RootViewControllerTypeLogin) {
         // 如果是登录页面 那就重新创建tabbar及主页面
         self.tabBarVC = nil;
         self.mainNavC = nil;
-        
         [JPUSHService setAlias:@"" callbackSelector:nil object:nil];
-
         //登录的界面
         LoginVC *loginVC = [[LoginVC alloc] init];
         NavigationController *nav = [[NavigationController alloc] initWithRootViewController:loginVC];
         self.window.rootViewController = nav;
-        
-    }else if (rootViewControllerType==RootViewControllerTypeMain) {
-        
-        //        self.window.rootViewController = nil;
+    }else if (rootViewControllerType ==
+              RootViewControllerTypeMain) {
         self.window.rootViewController = self.tabBarVC;
-        
     }
-    
     [self.window makeKeyAndVisible];
 }
 

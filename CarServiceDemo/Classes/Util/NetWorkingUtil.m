@@ -359,9 +359,14 @@ static AFHTTPSessionManager *manager;
         [appendParameters setObject:@"user" forKey:@"app_type"];
     }
 
-    NSLog(@"path:%@--params:%@",getURL,appendParameters.description);
+    __block NSString *printStr = [NSString stringWithFormat:@"%@?", getURL];
+    [appendParameters enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
+        NSString *appendStr = [NSString stringWithFormat:@"%@=%@&", key, obj];
+        printStr = [printStr stringByAppendingString:appendStr];
+    }];
+    printStr = [printStr substringToIndex:printStr.length - 1];
+    NSLog(@"%@", printStr);
 
-//    api_version=v1&auth_client=app&page=1&type=sale
     ///AFNet请求数据
     [manager GET:getURL parameters:appendParameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
@@ -389,30 +394,16 @@ static AFHTTPSessionManager *manager;
     NSString *postURL =  [NSString stringWithFormat:@"%@%@", baseUrl, path];
     
     NSMutableDictionary *appendParameters = [NSMutableDictionary dictionaryWithDictionary:parameters];
-//    [appendParameters setObject:@"ios" forKey:@"auth_client"];
-//    [appendParameters setObject:Api_version forKey:@"api_version"];
-    
-    ///去除没值得参数
-//    NSArray *keys = [appendParameters allKeys];
-//    for (NSString *key in keys) {
-//        NSString *vStr = [NSString stringWithFormat:@"%@", appendParameters[key]];
-//        if ([ValidateUtil isEmptyStr:vStr]) {//没有值得参数
-//            [appendParameters removeObjectForKey:key];
-//        }
-//    }
-    
-    //    //自动登录登录接口
+    // 自动登录登录接口
     if ([path isEqualToString:AutoLoginPath]) {
         authLoginPath = postURL;
         authLoginPathParameters = appendParameters;
     }
-    //    //登录接口
+    // 登录接口
     if ([path isEqualToString:LoginPath]) {
         loginPath = postURL;
         loginParameters = appendParameters;
-        
     }else{
-        
         [appendParameters setObject:@"ios" forKey:@"system"];
         [appendParameters setObject:[UserInfo userInfo].sign forKey:@"sign"];
         [appendParameters setObject:[UserInfo userInfo].timestamp forKey:@"timestamp"];
@@ -420,8 +411,13 @@ static AFHTTPSessionManager *manager;
         [appendParameters setObject:[UserInfo userInfo].user_id forKey:@"user_id"];
         [appendParameters setObject:@"user" forKey:@"app_type"];
     }
-    
-    NSLog(@"path:%@--params:%@",postURL,appendParameters.description);
+    __block NSString *printStr = [NSString stringWithFormat:@"%@?", postURL];
+    [appendParameters enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
+        NSString *appendStr = [NSString stringWithFormat:@"%@=%@&", key, obj];
+        printStr = [printStr stringByAppendingString:appendStr];
+    }];
+    printStr = [printStr substringToIndex:printStr.length - 1];
+    NSLog(@"%@", printStr);
     
     ///AFNet请求数据
     [manager POST:postURL parameters:appendParameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
@@ -437,7 +433,6 @@ static AFHTTPSessionManager *manager;
 }
 
 #pragma mark -- 上传文件到服务器
-
 -(void)postImageToServerNoProgressWithUrl:(NSString *)urlString parameters:(NSDictionary *)parameters view:(UIView *)view result:(void (^)(id obj,int  status,NSString *msg))result {
     
     parameters = (parameters==nil)?@{}:parameters;
@@ -453,55 +448,15 @@ static AFHTTPSessionManager *manager;
     NSString *postURL =  [NSString stringWithFormat:@"%@%@", baseUrl, urlString];
     
     NSMutableDictionary *appendParameters = [NSMutableDictionary dictionaryWithDictionary:parameters];
-//    [appendParameters setObject:@"ios" forKey:@"auth_client"];
-    
-    //    [appendParameters setObject:@"app" forKey:@"auth_client"];
-//    [appendParameters setObject:Api_version forKey:@"api_version"];
-    
-    
-//    self.pieProgressView = [[WkPieProgressView alloc]initWithFrame:view.bounds];
-//    [self.pieProgressView updatePercent:0 animation:YES];
-//    [view addSubview:self.pieProgressView];
     
     ///AFNet请求数据
-//    kWeakSelf(weakSelf);
     [manager POST:postURL parameters:appendParameters progress:^(NSProgress * _Nonnull uploadProgress) {
         
-//        NSLog(@"%lld",uploadProgress.totalUnitCount);
-//        __strong __typeof(weakSelf) strongSelf = weakSelf;
-//        float percent = (float)100 * uploadProgress.completedUnitCount / uploadProgress.totalUnitCount;
-//        NSLog(@"percent = %f",percent);
-//        [strongSelf.pieProgressView updatePercent:percent animation:YES];
-//
-//        if (percent >= 100) {
-//
-//            dispatch_async(dispatch_get_main_queue(), ^{
-//
-//                [strongSelf.pieProgressView removeFromSuperview];
-//                strongSelf.pieProgressView = nil;
-//            });
-//
-//        }
-        
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        
-//        dispatch_async(dispatch_get_main_queue(), ^{
-//            __strong __typeof(weakSelf) strongSelf = weakSelf;
-//            [strongSelf.pieProgressView removeFromSuperview];
-//            strongSelf.pieProgressView = nil;
-//        });
-        
         ///请求结果处理
         [self resultDealWithresponseObject:responseObject result:result];
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        ///请求出错
-//        dispatch_async(dispatch_get_main_queue(), ^{
-//            __strong __typeof(weakSelf) strongSelf = weakSelf;
-//            [strongSelf.pieProgressView removeFromSuperview];
-//            strongSelf.pieProgressView = nil;
-//        });
-        
         NSLog(@"%@",error);
         result(nil,-1, NetWorkErrorMsg);
     }];
@@ -523,12 +478,7 @@ static AFHTTPSessionManager *manager;
     NSString *postURL =  [NSString stringWithFormat:@"%@%@", baseUrl, urlString];
     
     NSMutableDictionary *appendParameters = [NSMutableDictionary dictionaryWithDictionary:parameters];
-//    [appendParameters setObject:@"ios" forKey:@"auth_client"];
 
-//    [appendParameters setObject:@"app" forKey:@"auth_client"];
-//    [appendParameters setObject:Api_version forKey:@"api_version"];
-    
-    
     self.pieProgressView = [[WkPieProgressView alloc]initWithFrame:view.bounds];
     [self.pieProgressView updatePercent:0 animation:YES];
     [view addSubview:self.pieProgressView];
@@ -544,7 +494,6 @@ static AFHTTPSessionManager *manager;
         [strongSelf.pieProgressView updatePercent:percent animation:YES];
         
         if (percent >= 100) {
-            
             dispatch_async(dispatch_get_main_queue(), ^{
                 
                 [strongSelf.pieProgressView removeFromSuperview];
@@ -578,47 +527,25 @@ static AFHTTPSessionManager *manager;
 
 }
 #pragma mark -- 请求回来的网络数据，处理方法
-- (void)resultDealWithresponseObject:(id)responseObject result:(void (^)(id obj,int  status,NSString *msg))result{
-    
+- (void)resultDealWithresponseObject:(id)responseObject result:(void (^)(id obj, int status, NSString *msg))result{
     NSString *resultStr = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
     NSString *resultMsg=@"";
     int statusInt;
-    
-    //  后台执行：///调试
-//    dispatch_async(dispatch_get_global_queue(0, 0), ^{
-//        // something
-//        
-//        NSString *params = @"";
-//        if (requestParameters.count>0 && requestParameters) {
-//            NSDictionary *dic = [[NSDictionary alloc] initWithDictionary:requestParameters];
-//            if (dic.count>0) {
-//                NSError *error;
-//                NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dic options:NSJSONWritingPrettyPrinted error:&error];
-//                params = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-//            }
-//            
-//            
-//            [[NetworkLogUtil networkLogUtil] addNewLogWithMobile:[UserInfo userInfo].mobile api:requestPath version:Api_version params:params result:resultStr];
-//        }
-//        
-//    });
-    
-    
     //json对象转换为oc对象 //下面转为字典
     NSData *jsonData = [resultStr dataUsingEncoding:NSUTF8StringEncoding];
     NSError *err;
-    NSDictionary *resultObj = [NSJSONSerialization JSONObjectWithData:jsonData
-                                    options:NSJSONReadingMutableContainers
-                                      error:&err];
-    
-    if (resultObj==nil || resultObj.count == 0) { //网络异常
-//     NSLog(@"结果为空!");
+    NSDictionary *resultObj = [
+        NSJSONSerialization JSONObjectWithData: jsonData
+        options: NSJSONReadingMutableContainers
+        error: &err
+    ];
+    if (resultObj == nil || resultObj.count == 0) {
+        //网络异常
         statusInt = -1;
         resultMsg = NetWorkErrorMsg;
         result(nil,statusInt,resultMsg);
         return;
     }
-    
     ///判断状态数据的存在
     //下面为出错结果处理
     if ([resultObj[@"code"] integerValue] != 100) { //bu正确
@@ -628,64 +555,21 @@ static AFHTTPSessionManager *manager;
             result(nil,statusInt,resultMsg);
             return;
         }
-        ///下面处理cookies过期
+        // 下面处理cookies过期
         if ([resultObj[@"code"] integerValue] == 300) {
-
-
-//            登录过期了，发通知到tabbar登录
+            // 登录过期了，发通知到tabbar登录
             [[NSNotificationCenter defaultCenter] postNotificationName:@"LoginCookiesTimeOut" object:nil];
-
             result(nil,-1, NetWorkErrorMsg);
-
             return;
-
-            ///过去了，从新登录
-//            isRelogin = YES;
-//            [self reLoginWithResult:result];
-
-//            return;
         }
-//
-//        //code: 不为10200 结果出错
-//        statusInt = -1;
-//        resultMsg = resultObj[@"state"][@"msg"];
-//        result(nil,statusInt,resultMsg);
-//
-//        ///下面处理禁用状态
-//        if ([resultObj[@"state"][@"code"] integerValue] == 20002) {  //禁用状态
-//
-//
-////            XFBAlertController *alertController = [XFBAlertController alertControllerWithTitle:@"账号已禁用！" message:resultMsg preferredStyle:UIAlertControllerStyleAlert];
-////            alertController.messageAlignment = WKMessageAlignmentLeft;
-////            UIAlertAction *sureAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *_Nonnull action) {
-////
-//////                [weakSelf gotoLoginView];
-////            }];
-////             [alertController addAction:sureAction];
-////            [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:alertController animated:YES completion:nil];
-//
-//            {
-//
-//
-//            }
-//
-//            return;
-//        }
-//
-//        return;
-//
     }
     
     ///下面是重新登录处理
     if (isRelogin) { //重新登录成功
         isRelogin = NO;
-        
         if (requestType==0) { //get请求
-            
             [self getObjWithPath:requestPath parameters:requestParameters result:result];
-            
         }else { //post请求
-            
             [self postObjWithPath:requestPath parameters:requestParameters result:result];
         }
         return;
@@ -708,20 +592,11 @@ static AFHTTPSessionManager *manager;
         return;
     }
     
-    
     ///检测无网络设置
     CheckAlreadySettingNetwork();
     ///返回的结果可能是字典，也可能是数组
     result(resultObj[@"data"],statusInt,resultMsg);
 }
-
-//LSLoginVC *loginVC = [[LSLoginVC alloc] init];
-//QMNavC *nav = [[QMNavC alloc] initWithRootViewController:loginVC];
-//
-////    [UIApplication sharedApplication].keyWindow.rootViewController = nav;
-//
-//LSAppDelegate *app = (LSAppDelegate*)[[UIApplication sharedApplication] delegate];
-//app.window.rootViewController = nav;
 
 /**
  描述：加载网络图片资源
@@ -734,7 +609,6 @@ static AFHTTPSessionManager *manager;
         [imageView setImage:[UIImage imageNamed:defaultIconName]];
         return ;
     }
-//    [imageView sd_setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:[UIImage imageNamed:defaultIconName] completed:webImageCompletionBlock];
     
     [imageView sd_setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:[UIImage imageNamed:defaultIconName] options:SDWebImageRetryFailed completed:webImageCompletionBlock];
 }
@@ -745,13 +619,6 @@ static AFHTTPSessionManager *manager;
         [imageView setImage:[UIImage imageNamed:defaultIconName]];
         return ;
     }
-    //给一张默认图片，先使用默认图片，当图片加载完成后再替换
-//    [imageView sd_setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:[UIImage imageNamed:defaultIconName]];
-//    [imageView sd_setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:[UIImage imageNamed:defaultIconName] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-//        if (imageView.image==nil) {
-//            imageView.image = [UIImage imageNamed:defaultIconName];
-//        }
-//    }];
     
     [imageView sd_setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:[UIImage imageNamed:defaultIconName] options:SDWebImageRetryFailed completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
         if (imageView.image==nil) {
@@ -806,9 +673,7 @@ static AFHTTPSessionManager *manager;
     [manager GET:getURL parameters:appendParameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
         [self resultDealWithresponseObject:responseObject result:result ];
-        
-        // NSLog(@"%@", [NSThread currentThread]);
-        
+    
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         result(nil,-1, NetWorkErrorMsg);
     }];
@@ -851,64 +716,14 @@ static AFHTTPSessionManager *manager;
         }
     }
     
-    
     [manager POST:postURL parameters:appendParameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        
         [self resultDealWithresponseObject:responseObject result:result];
-        
-        // NSLog(@"%@", [NSThread currentThread]);
-        
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         result(nil,-1, NetWorkErrorMsg);
     }];
-    
 }
 
-
-
-
-//+ (NSString*)webViewUrlAppendVersion:(NSString*)url
-//{
-//    NSString *urlStr = [NSString stringWithFormat:@"%@", url];
-//
-//    ///加版本号 api_version
-//    NSString *api_version = kCurrentAppVersion;
-//    ///要加参数应对跨域
-//
-////    UserInfo *user = [UserInfo userInfo];
-////    NSString *pStr = [NSString stringWithFormat:@"personal_mobile=%@&personal_auto_login_token=%@&personal_timestamp=%@&personal_signature=%@&api_version=%@", user.mobile, user.auth_login_token, user.timestamp, user.signature, api_version] ;
-//
-//    ///要加参数应对跨域
-//    if ([urlStr containsString:@"#"]) {
-//        NSArray *arr = [urlStr componentsSeparatedByString:@"#"];
-//
-//        if ([urlStr containsString:@"?"]) {
-//
-//            NSString *newUrlStr = [NSString stringWithFormat:@"%@&%@#%@", arr[0], pStr, arr[1]];
-//            urlStr = newUrlStr;
-//        }else {
-//            NSString *newUrlStr = [NSString stringWithFormat:@"%@?%@#%@", arr[0], pStr, arr[1]];
-//            urlStr = newUrlStr;
-//        }
-//
-//    }else {
-//
-//        if ([urlStr containsString:@"?"]) {
-//
-//            NSString *newUrlStr = [NSString stringWithFormat:@"%@&%@", urlStr, pStr];
-//            urlStr = newUrlStr;
-//        }else {
-//            NSString *newUrlStr = [NSString stringWithFormat:@"%@?%@", urlStr, pStr];
-//            urlStr = newUrlStr;
-//        }
-//    }
-//
-//    return urlStr;
-//}
-
-- (void)refreshToken{
-    
-    
+- (void)refreshToken {
     NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:self.refreshTokentime target:self selector:@selector(startRefreshToken) userInfo: nil repeats:YES];
     [[NSRunLoop currentRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
     self.refreshTokentimer = timer;
@@ -916,21 +731,16 @@ static AFHTTPSessionManager *manager;
 }
 
 - (void)startRefreshToken{
-
     [self getDataWithPath:RefreshTokenPath parameters:nil result:^(id obj, int status, NSString *msg) {
         if(status == 1){
             
         }else{
-            
             [self.refreshTokentimer invalidate];
             self.refreshTokentimer = nil;
             [MBProgressHUD showErrorOnView:[UIApplication sharedApplication].keyWindow.rootViewController.view withMessage:@"网络异常，请重新登录！"];
-            
             [(AppDelegate*)[[UIApplication sharedApplication] delegate] switchRootViewControllerWithType:RootViewControllerTypeLogin];
-            
         }
     }];
-
 }
 
 
