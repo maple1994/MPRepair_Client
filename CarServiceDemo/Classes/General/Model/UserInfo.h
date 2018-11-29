@@ -13,12 +13,10 @@
 //@protocol UserPermissionInfo <NSObject>
 //@end
 
-@interface UserInfo:JSONModel
+@interface UserInfo: JSONModel
 
 + (UserInfo *)userInfo;
 
-/// id
-@property (nonatomic, assign) NSInteger uid;
 /// 显示用的id
 @property (nonatomic, copy) NSString *user_id;
 /// 登录token
@@ -49,5 +47,12 @@
 @property(nonatomic,copy)NSString *currentCity;
 /// 是否登录
 @property (nonatomic, assign) BOOL isLogin;
+
+/// 序列化
+- (void)serilization;
+/// 读取本地用户数据
+- (void)readLocalData;
+/// 移除用户数据
+- (void)removeUserInfo;
 @end
 

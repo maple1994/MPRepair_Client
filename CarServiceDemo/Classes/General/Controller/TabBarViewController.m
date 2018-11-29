@@ -13,6 +13,7 @@
 #import "AnnualInspectionVC.h"
 #import "ServiceVC.h"
 #import "MyVC.h"
+#import "LoginVC.h"
 
 ///判断当前状态的Key,上线状态：1
 extern BOOL kCurrentState;
@@ -29,9 +30,10 @@ extern BOOL kCurrentState;
     NSUInteger tabIndex = [tabBar.items indexOfObject:item];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"TabBarDidSelectItemNoti" object:nil userInfo:@{@"TabBarDidSelectItemIndex":@(tabIndex)}];
     
-    AppDelegate *delegate =(AppDelegate *)[UIApplication sharedApplication].delegate;
-    if (delegate.rootViewControllerType == RootViewControllerTypeMain && tabIndex == 3) {
-        [delegate switchRootViewControllerWithType:RootViewControllerTypeLogin];
+    if (![UserInfo userInfo].isLogin && tabIndex == 3) {
+        LoginVC *vc = [[LoginVC alloc] init];
+        NavigationController *nav = [[NavigationController alloc] initWithRootViewController:vc];
+        [self presentViewController:nav animated:true completion:nil];
     }
 }
 
@@ -65,7 +67,6 @@ extern BOOL kCurrentState;
 {
    
     childVc.title = title;
-    
     childVc.tabBarItem.image         = [UIImage imageNamed:image];
     childVc.tabBarItem.selectedImage = [[UIImage imageNamed:selectedImage] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     

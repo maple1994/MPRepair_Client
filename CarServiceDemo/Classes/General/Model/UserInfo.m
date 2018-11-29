@@ -25,61 +25,59 @@
     BOOL _isLogin;
 }
 #pragma mark 自定义归档
-#pragma mark NSCoding协议方法
-
-//对属性编码，归档的时候会调用
-- (void)encodeWithCoder:(NSCoder *)aCoder {
-//    [aCoder encodeObject:self.real_name forKey:USEROFNAME];
-    
-    [aCoder encodeObject:_phone forKey:MOBILE];
-    [aCoder encodeObject:_account forKey:ACCOUNT];
-    ///不要把密码存明文
-    if (![ValidateUtil isEmptyStr:_token]) {
-        
-        NSInteger index = arc4random()%10;
-        NSArray *arr = @[@"953",@"123",@"468",@"325",@"795",@"279",@"635",@"852",@"614",@"753"];
-        NSString *tmp = [NSString stringWithFormat:@"%@%@", arr[index], _token];
-        [aCoder encodeObject:[CommonFunc base64StringFromText:tmp] forKey:TOKEN];
-    }else {
-        
-        [aCoder encodeObject:_token forKey:TOKEN];
-    }
-    
-    ///不要把密码存明文
-    if (![ValidateUtil isEmptyStr:_password]) {
-        
-        NSInteger index = arc4random()%10;
-        NSArray *arr = @[@"953",@"123",@"468",@"325",@"795",@"279",@"635",@"852",@"614",@"753"];
-        NSString *tmp1 = [NSString stringWithFormat:@"%@%@", arr[index], _password];
-        [aCoder encodeObject:[CommonFunc base64StringFromText:tmp1] forKey:PASSWORD];
-    }else {
-        
-        [aCoder encodeObject:_password forKey:PASSWORD];
-    }
-}
-
-//对属性解码，解归档调用
-- (id)initWithCoder:(NSCoder *)aDecoder {
-    self = [super init];
-    if (self != nil) {
-        
-//        self.auth_login_token=[CommonFunc textFromBase64String:[aDecoder decodeObjectForKey:TOKEN]] ;
-        self.phone = [aDecoder decodeObjectForKey:MOBILE];
-        self.account = [aDecoder decodeObjectForKey:ACCOUNT];
-        NSString *tmp = [CommonFunc textFromBase64String:[aDecoder decodeObjectForKey:TOKEN]];
-        if (![ValidateUtil isEmptyStr:tmp]) {
-            self.token = [tmp substringFromIndex:3];
-        }
-        NSString *tmp1 = [CommonFunc textFromBase64String:[aDecoder decodeObjectForKey:PASSWORD]];
-        if (![ValidateUtil isEmptyStr:tmp1]) {
-            self.password = [tmp1 substringFromIndex:3];
-        }
-        
-    }
-    return self;
-}
-
-
+//#pragma mark NSCoding协议方法
+//
+////对属性编码，归档的时候会调用
+//- (void)encodeWithCoder:(NSCoder *)aCoder {
+////    [aCoder encodeObject:self.real_name forKey:USEROFNAME];
+//    
+//    [aCoder encodeObject:_phone forKey:MOBILE];
+//    [aCoder encodeObject:_account forKey:ACCOUNT];
+//    ///不要把密码存明文
+//    if (![ValidateUtil isEmptyStr:_token]) {
+//        
+//        NSInteger index = arc4random()%10;
+//        NSArray *arr = @[@"953",@"123",@"468",@"325",@"795",@"279",@"635",@"852",@"614",@"753"];
+//        NSString *tmp = [NSString stringWithFormat:@"%@%@", arr[index], _token];
+//        [aCoder encodeObject:[CommonFunc base64StringFromText:tmp] forKey:TOKEN];
+//    }else {
+//        
+//        [aCoder encodeObject:_token forKey:TOKEN];
+//    }
+//    
+//    ///不要把密码存明文
+//    if (![ValidateUtil isEmptyStr:_password]) {
+//        
+//        NSInteger index = arc4random()%10;
+//        NSArray *arr = @[@"953",@"123",@"468",@"325",@"795",@"279",@"635",@"852",@"614",@"753"];
+//        NSString *tmp1 = [NSString stringWithFormat:@"%@%@", arr[index], _password];
+//        [aCoder encodeObject:[CommonFunc base64StringFromText:tmp1] forKey:PASSWORD];
+//    }else {
+//        
+//        [aCoder encodeObject:_password forKey:PASSWORD];
+//    }
+//}
+//
+////对属性解码，解归档调用
+//- (id)initWithCoder:(NSCoder *)aDecoder {
+//    self = [super init];
+//    if (self != nil) {
+//        
+////        self.auth_login_token=[CommonFunc textFromBase64String:[aDecoder decodeObjectForKey:TOKEN]] ;
+//        self.phone = [aDecoder decodeObjectForKey:MOBILE];
+//        self.account = [aDecoder decodeObjectForKey:ACCOUNT];
+//        NSString *tmp = [CommonFunc textFromBase64String:[aDecoder decodeObjectForKey:TOKEN]];
+//        if (![ValidateUtil isEmptyStr:tmp]) {
+//            self.token = [tmp substringFromIndex:3];
+//        }
+//        NSString *tmp1 = [CommonFunc textFromBase64String:[aDecoder decodeObjectForKey:PASSWORD]];
+//        if (![ValidateUtil isEmptyStr:tmp1]) {
+//            self.password = [tmp1 substringFromIndex:3];
+//        }
+//        
+//    }
+//    return self;
+//}
 #pragma mark - 单例设计
 
 static UserInfo *_instance;
@@ -102,7 +100,7 @@ static UserInfo *_instance;
 }
 
 - (BOOL)isLogin {
-    if (_uid>0) {
+    if (_user_id.length > 0) {
         return YES;
     }else {
         return NO;
@@ -110,10 +108,8 @@ static UserInfo *_instance;
 }
 
 - (NSString *)timestamp{
-    
     NSString *timestamp = [NSString stringWithFormat:@"%.0f", [[NSDate date] timeIntervalSince1970]];
     return timestamp;
-    
 }
 
 - (void)setTimestamp:(NSString *)timestamp{
@@ -126,7 +122,6 @@ static UserInfo *_instance;
     NSString *token = self.token;
     NSString *signStr = [NSString stringWithFormat:@"%@%@", token,timestamp];
     NSString *md5Str = [NSString stringWithFormat:@"%@",[IOSmd5 MD5ForLower32Bate:signStr]];
-    
     return md5Str;
 }
 
@@ -134,16 +129,49 @@ static UserInfo *_instance;
     _sign = sign;
 }
 
-
 + (BOOL)propertyIsOptional:(NSString *)propertyName{
     return YES;
 }
 
-+ (JSONKeyMapper *)keyMapper{
-    
-    return [[JSONKeyMapper alloc]initWithModelToJSONDictionary:@{@"uid":@"id"}];
+#pragma mark - 序列化与反序列化
+/// 序列化
+- (void)serilization {
+    NSString *jsonStr = [self toJSONString];
+    [kUserDefault setObject:jsonStr forKey: @"MP_USER_INFO_KEY"];
+}
+/// 读取本地用户数据
+- (void)readLocalData {
+    NSString *jsonStr = [kUserDefault objectForKey:@"MP_USER_INFO_KEY"];
+    if (jsonStr != nil && jsonStr.length > 0) {
+        UserInfo *info = [[UserInfo alloc] initWithString:jsonStr error:nil];
+        self.user_id = info.user_id;
+        self.token = info.token;
+        self.phone = info.phone;
+        self.name = info.name;
+        self.pic_url = info.pic_url;
+        self.sex = info.sex;
+        self.telephone = info.telephone;
+        self.point = info.point;
+        self.is_pass = info.is_pass;
+        self.account = info.account;
+        self.currentCity = info.currentCity;
+    }
 }
 
+/// 移除用户数据
+- (void)removeUserInfo {
+    [kUserDefault setObject:nil forKey:@"MP_USER_INFO_KEY"];
+    self.user_id = @"";
+    self.token = @"";
+    self.phone = @"";
+    self.name = @"";
+    self.pic_url = @"";
+    self.telephone = @"";
+    self.point = @"";
+    self.is_pass = false;
+    self.account = @"";
+    self.currentCity = @"";
+}
 
 @end
 

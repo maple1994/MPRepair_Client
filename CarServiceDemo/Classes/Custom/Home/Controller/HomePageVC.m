@@ -27,7 +27,7 @@
 #import "VehicleViolationInfoModel.h"
 #import "MyManager.h"
 #import "AddCarController.h"
-
+#import "LoginVC.h"
 
 @interface HomePageVC ()<UISearchBarDelegate,MAMapViewDelegate, AMapSearchDelegate>
 {
@@ -209,10 +209,7 @@
     }
 }
 
-
-
 #pragma mark - Initialization
-
 - (void)initMapView
 {
     self.mapView = [[MAMapView alloc] initWithFrame:self.view.bounds];
@@ -367,28 +364,13 @@
 - (void)initCLLocationManager
 {
     if ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusNotDetermined) {
-        
         ///请求权限
         [[[CLLocationManager alloc] init] requestWhenInUseAuthorization];
-        
     }else if ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusDenied) {
-        
-        //        NSLog(@"定位功能不可用，提示用户或忽略");
-
         UIAlertController *AC = [UIAlertController alertControllerWithTitle:@"定位失败，请打开定位开关！" message:@"定位服务未开启，请进入系统［设置］> [隐私] > [定位服务]中打开开关，并允许使用定位服务！" preferredStyle:UIAlertControllerStyleAlert];
         
         UIAlertAction *op = [UIAlertAction actionWithTitle:@"设置" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            //Location Services — prefs:root=LOCATION_SERVICES
-//            NSURL *url = [NSURL URLWithString:@"prefs:root=LOCATION_SERVICES"];
-            
-//            if ([[UIApplication sharedApplication] canOpenURL:url]) {
-//
-//                [[UIApplication sharedApplication] openURL:url];
-//
-//            }else{
-                [[UIApplication sharedApplication]openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
-//            }
-
+            [[UIApplication sharedApplication]openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
         }];
         
         UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
@@ -398,45 +380,28 @@
         
         [[UIApplication sharedApplication].delegate.window.rootViewController presentViewController:AC animated:YES completion:nil];
     }else{
-        
-          self.mapView.customizeUserLocationAccuracyCircleRepresentation = YES;
+        self.mapView.customizeUserLocationAccuracyCircleRepresentation = YES;
 
     }
 }
 
-
 #pragma mark - Life Cycle
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
-    
     [self setupProperty];
-    
     [self initCLLocationManager];
-    
     [self initMapView];
-    
-//    [self initSearch];
-//    [self searchPoiKeyword:@"汽车维修"];
-    /// 请求汽修厂详情
-    
-    
-//    /// 请求违章信息
-//    AppDelegate *delegate =[[UIApplication sharedApplication] delegate];
-    if (self.appDelegate.rootViewControllerType != RootViewControllerTypeMain) {
+    if (![UserInfo userInfo].isLogin) {
+        [self showLoginVC];
+    }else {
         [self requestVehicleViolationInfo];
-        [self loadCarData];
+//        [self loadCarData];
     }
-    
 }
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:YES animated:NO];
-//    if(self.repairShopInfoDataArr.count == 0){
-//        [self requestRepairShopInfo];
-//    }
-    
     if (@available(iOS 11.0, *)) {//防止Y轴偏移64像素
         
     } else {
@@ -444,7 +409,6 @@
         self.myContentViewBottom.constant = -54;
         self.automaticallyAdjustsScrollViewInsets = NO;
     }
-    
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
@@ -452,9 +416,14 @@
     [self.navigationController setNavigationBarHidden:NO animated:NO];
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    _mapView.userTrackingMode = MAUserTrackingModeFollow;
+}
+
+#pragma mark -
 - (void)setupProperty{
-    
-    
     UIImage* searchBarBg = [self GetImageWithColor:[UIColor clearColor] andHeight:32.0f];
     //设置背景图片
     [_searchBar setBackgroundImage:searchBarBg];
@@ -475,7 +444,6 @@
     [self scheduledRepairBtnAction:self.weiXiuBtn];
     [self.locationBtn setCornerRadius:4];
 }
-
 
 - (void)loadCarData{
     
@@ -511,17 +479,10 @@
     return img;
 }
 
-
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-    
-    _mapView.userTrackingMode = MAUserTrackingModeFollow;
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (void)showLoginVC {
+    LoginVC *vc = [[LoginVC alloc] init];
+    NavigationController *nav = [[NavigationController alloc] initWithRootViewController:vc];
+    [self presentViewController:nav animated:true completion:nil];
 }
 
 #pragma mark -- 请求维修点信息
@@ -657,8 +618,8 @@
 }
 
 - (IBAction)gotoReservationVCBtnAction:(UIButton *)sender {
-    if (self.appDelegate.rootViewControllerType == RootViewControllerTypeMain) {
-        [self.appDelegate switchRootViewControllerWithType:RootViewControllerTypeLogin];
+    if(![UserInfo userInfo].isLogin) {
+        return;
     }
     if (!self.weiXiuBtn.selected && !self.baoYangBtn.selected) {
         [MBProgressHUD showErrorOnView:self.view withMessage:@"请选择维修或者保养进行预约!"];

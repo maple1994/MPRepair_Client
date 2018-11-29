@@ -11,6 +11,7 @@
 #import "AnnualInspectionHistoryVC.h"
 #import "AnnualInspectionTypeSelectionView.h"
 #import "AnnualInspectionSelfDrivingNoteVC.h"
+#import "LoginVC.h"
 
 @interface AnnualInspectionVC ()<SDCycleScrollViewDelegate>
 @property (weak, nonatomic) IBOutlet UIView *topBackView;
@@ -89,8 +90,11 @@
 
 #pragma mark - 菜单点击事件
 - (IBAction)menuButtonAction:(UIButton *)sender {
-    if (self.appDelegate.rootViewControllerType == RootViewControllerTypeMain) {
-        [self.appDelegate switchRootViewControllerWithType:RootViewControllerTypeLogin];
+    if (![UserInfo userInfo].isLogin) {
+        LoginVC *vc = [[LoginVC alloc] init];
+        NavigationController *nav = [[NavigationController alloc] initWithRootViewController:vc];
+        [self presentViewController:nav animated:true completion:nil];
+        return;
     }
     if (sender.tag == 101) {
         kWeakSelf(weakSelf);

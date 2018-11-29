@@ -83,16 +83,12 @@
 
 #pragma mark - 退出登录
 - (IBAction)logOutAction:(id)sender {
-    self.user = nil;
-    if ([NSKeyedArchiver archiveRootObject:self.user toFile:kUserInfoPath])
-    {
-        NSLog(@"用户信息删除成功！");
-    }
+    [self.user removeUserInfo];
     [JPUSHService setAlias:@"" callbackSelector:nil object:nil];
     [[NSNotificationCenter defaultCenter] postNotificationName:LogoutNotification object:nil];
     
     //登录的窗口
-    [(AppDelegate*)[[UIApplication sharedApplication] delegate] switchRootViewControllerWithType:RootViewControllerTypeLogin];
+    [(AppDelegate*)[[UIApplication sharedApplication] delegate] switchRootViewController];
 }
 
 #pragma mark -- 懒加载

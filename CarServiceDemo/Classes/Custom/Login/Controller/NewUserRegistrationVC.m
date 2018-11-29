@@ -166,21 +166,12 @@
 
     [self.util postDataWithPath:url parameters:params result:^(id obj, int status, NSString *msg) {
         if (status == 1) {
-            
-            UserInfo *user = [[UserInfo alloc]init];
-            user.account = weakSelf.mobiTF.text;
-            user.password = weakSelf.getNewPasswordTF1.text;
-            
-            if ([NSKeyedArchiver archiveRootObject:user toFile:kUserInfoPath])
-            {
-                NSLog(@"用户信息更新成功！");
-            }
+            weakSelf.user.account = weakSelf.mobiTF.text;
+            weakSelf.user.password = weakSelf.getNewPasswordTF1.text;
             [MBProgressHUD dismissHUDForView:weakSelf.view withsuccess:msg];
-            
             [weakSelf.navigationController popViewControllerAnimated:YES];
 
         }else{
-
             [MBProgressHUD dismissHUDForView:weakSelf.view withError:msg];
         }
     }];

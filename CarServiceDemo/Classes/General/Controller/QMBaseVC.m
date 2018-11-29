@@ -24,7 +24,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     self.user = [UserInfo userInfo];
     self.util = [NetWorkingUtil netWorkingUtil];
     self.appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;

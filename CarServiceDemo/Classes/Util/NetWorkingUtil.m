@@ -94,8 +94,6 @@ static BOOL _alreadyCheckNetwork = NO;
 //单例实现
 @implementation NetWorkingUtil
 
-
-
 static NetWorkingUtil *instance = nil;
 //正式环境
 //static NSString *mainURL=@"";//
@@ -278,7 +276,7 @@ static AFHTTPSessionManager *manager;
  ,int status  -1:失败 1;成功，
  ,NSString *msg 信息)
  */
-- (void)postDataWithPath:(NSString *)path parameters:(NSDictionary *)parameters result:(void (^)(id obj,int  status,NSString *msg)) result{
+- (void)postDataWithPath:(NSString *)path parameters:(NSDictionary *)parameters result:(void (^)(id obj,int status,NSString *msg)) result{
     
     parameters = (parameters==nil)?@{}:parameters;
     [self postObjWithPath:path parameters:parameters result:result];
@@ -380,7 +378,7 @@ static AFHTTPSessionManager *manager;
 }
 
 #pragma mark -- post请求
-- (void)postObjWithPath:(NSString *)path parameters:(NSDictionary *)parameters result:(void (^)(id obj,int  status,NSString *msg))result{
+- (void)postObjWithPath:(NSString *)path parameters:(NSDictionary *)parameters result:(void (^)(id obj,int status,NSString *msg))result{
     
     CheckNetwork();
     
@@ -548,15 +546,17 @@ static AFHTTPSessionManager *manager;
     }
     ///判断状态数据的存在
     //下面为出错结果处理
-    if ([resultObj[@"code"] integerValue] != 100) { //bu正确
-        if ([resultObj[@"code"] integerValue] == 200) {
+    NSInteger code = [resultObj[@"code"] integerValue];
+    NSLog(@"%d", code);
+    if (code != 100) { //bu正确
+        if (code == 200) {
             statusInt = -1;
             resultMsg = resultObj[@"msg"];
             result(nil,statusInt,resultMsg);
             return;
         }
         // 下面处理cookies过期
-        if ([resultObj[@"code"] integerValue] == 300) {
+        if (code == 300) {
             // 登录过期了，发通知到tabbar登录
             [[NSNotificationCenter defaultCenter] postNotificationName:@"LoginCookiesTimeOut" object:nil];
             result(nil,-1, NetWorkErrorMsg);
@@ -738,7 +738,7 @@ static AFHTTPSessionManager *manager;
             [self.refreshTokentimer invalidate];
             self.refreshTokentimer = nil;
             [MBProgressHUD showErrorOnView:[UIApplication sharedApplication].keyWindow.rootViewController.view withMessage:@"网络异常，请重新登录！"];
-            [(AppDelegate*)[[UIApplication sharedApplication] delegate] switchRootViewControllerWithType:RootViewControllerTypeLogin];
+            [(AppDelegate*)[[UIApplication sharedApplication] delegate] switchRootViewController];
         }
     }];
 }

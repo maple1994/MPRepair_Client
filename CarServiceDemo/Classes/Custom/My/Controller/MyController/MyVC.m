@@ -94,16 +94,8 @@
             weakSelf.user= [[UserInfo alloc]initWithDictionary:obj error:nil];
             weakSelf.user.token = token;
             weakSelf.user.user_id = user_id;
-            
-//            [JPUSHService setAlias:weakSelf.user.phone callbackSelector:nil object:nil];
-            
             [MBProgressHUD dismissHUDForView:weakSelf.view];
-            
-            if ([NSKeyedArchiver archiveRootObject:weakSelf.user toFile:kUserInfoPath])
-            {
-                NSLog(@"用户信息更新成功！");
-            }
-            
+            [weakSelf.user serilization];
             NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
             [weakSelf.mainTableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath,nil] withRowAnimation:UITableViewRowAnimationNone];
             

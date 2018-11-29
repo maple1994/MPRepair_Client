@@ -191,7 +191,8 @@ return self; \
 
 
 //用户类归档保存的文件路径
-#define kUserInfoPath  [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:@"userInfo.archive"]
+//#define kUserInfoPath  [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:@"userInfo.archive"]
+#define kUserInfoPath @"/Users/maple/Desktop/user.plist"
 
 #define KbgmMP3Path  [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:@"bgmMP3Path.archive"]
 

@@ -12,13 +12,6 @@
 
 typedef void(^RootVCCompletionBlock)(void);
 
-//RootViewControllerType
-typedef NS_ENUM(NSInteger,RootViewControllerType){
-    RootViewControllerTypeMain,
-    RootViewControllerTypeLogin,
-    RootViewControllerTypeTabBar,
-};
-
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
@@ -28,14 +21,10 @@ typedef NS_ENUM(NSInteger,RootViewControllerType){
 /**
  *  切换根控制器
  */
-- (void)switchRootViewControllerWithType:(RootViewControllerType)rootViewControllerType;
+- (void)switchRootViewController;
 
-- (void)switchRootViewControllerWithType:(RootViewControllerType)rootViewControllerType completed:(RootVCCompletionBlock)completedBlock;
 // 处理推送跳转
 - (void)dealRemoteNotificationPush;
-
-///
-@property (nonatomic ,assign,readonly)RootViewControllerType rootViewControllerType;
 
 @end
 

@@ -13,17 +13,19 @@
 
 @interface LoginVC () <UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *mobiTF;
-
 @property (weak, nonatomic) IBOutlet UITextField *verificationCodeTF;
 @property (weak, nonatomic) IBOutlet JKCountDownButton *sendVerificationCodeBtn;
-
 @property (weak, nonatomic) IBOutlet UIButton *loginBtn;
-
 @property (weak, nonatomic) IBOutlet UIButton *agreeToTheAgreementBtn;
 
 @end
 
 @implementation LoginVC
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    [self setupProperty];
+}
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
@@ -37,130 +39,68 @@
     [self.navigationController setNavigationBarHidden:YES animated:NO];
 }
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-   
-    [self setupProperty];
-}
-
 - (void)setupProperty{
-    
     self.title = @"登录";
-    
     [self.mobiTF setValue:[UIColor colorwithHexString:@"0093DD"] forKeyPath:@"_placeholderLabel.textColor"];
     [self.verificationCodeTF setValue:[UIColor colorwithHexString:@"0093DD"] forKeyPath:@"_placeholderLabel.textColor"];
     self.sendVerificationCodeBtn.layer.borderColor = [UIColor colorwithHexString:@"3CADFF"].CGColor;
     self.sendVerificationCodeBtn.layer.borderWidth = 1;
     self.sendVerificationCodeBtn.layer.cornerRadius = 3;
     [self.loginBtn setCornerRadius:19];
-//    UIButton *button = [self.mobiTF valueForKey:@"_clearButton"];
-//    [button setImage:[UIImage imageNamed:@"btn_tc_close"] forState:UIControlStateNormal];
-    
-//    UIButton *button1 = [self.verificationCodeTF valueForKey:@"_clearButton"];
-//    [button1 setImage:[UIImage imageNamed:@"btn_tc_close"] forState:UIControlStateNormal];
-    
     [self agreeToTheAgreementBtnAction:self.agreeToTheAgreementBtn];
-    
-    
 }
-
-
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 
 - (IBAction)loginBtnAction:(UIButton *)sender {
-    
     if (!self.agreeToTheAgreementBtn.selected) {
         [MBProgressHUD showErrorOnView:self.view withMessage:@"请阅读并同意《8号养车用户协议》"];
         return;
     }
-    
     if (self.mobiTF.text.length != 11) {
         [MBProgressHUD showErrorOnView:self.view withMessage:@"请输入正确的手机号"];
         return;
     }
-    
     if ([ValidateUtil isEmptyStr:self.verificationCodeTF.text]) {
         [MBProgressHUD showErrorOnView:self.view withMessage:@"请输入密码"];
         return;
     }
-    
-    
-    
-    
     [MBProgressHUD showStatusOnView:self.view withMessage:LoadingMsg];
     kWeakSelf(weakSelf);
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
     params[@"phone"] = self.mobiTF.text;
     params[@"password"] = self.verificationCodeTF.text;
-
-
     [self.util postDataWithPath:@"/api/login/login/" parameters:params result:^(id obj, int status, NSString *msg) {
         if (status == 1) {
-
-            weakSelf.user = [[UserInfo alloc]initWithDictionary:obj error:nil];
-            
+            UserInfo *info = [[UserInfo alloc]initWithDictionary:obj error:nil];
+            weakSelf.user.user_id = info.user_id;
+            weakSelf.user.token = info.token;
             [weakSelf reuqestUserInfo];
-            
-            if ([NSKeyedArchiver archiveRootObject:weakSelf.user toFile:kUserInfoPath])
-            {
-                NSLog(@"用户信息更新成功！");
-            }
-            
-            
-//            [(AppDelegate*)[[UIApplication sharedApplication] delegate] switchRootViewControllerWithType:RootViewControllerTypeTabBar];
-//            [weakSelf.util refreshToken];
-
-            
             [MBProgressHUD dismissHUDForView:weakSelf.view];
-
         }else{
-
             [MBProgressHUD dismissHUDForView:weakSelf.view withError:msg];
         }
     }];
 }
 
 - (void)reuqestUserInfo{
-    
     [MBProgressHUD showStatusOnView:self.view withMessage:LoadingMsg];
     kWeakSelf(weakSelf);
-
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
     params[@"id"] = self.user.user_id;
-    
     [self.util getDataWithPath:@"/api/user/user/" parameters:params result:^(id obj, int status, NSString *msg) {
         if (status == 1) {
-        
             NSString *token = weakSelf.user.token;
             NSString *user_id = weakSelf.user.user_id;
-            
-            weakSelf.user= [[UserInfo alloc]initWithDictionary:obj error:nil];
+            weakSelf.user = [[UserInfo alloc] initWithDictionary:obj error:nil];
             weakSelf.user.token = token;
             weakSelf.user.user_id = user_id;
             weakSelf.user.password = weakSelf.verificationCodeTF.text;
             [JPUSHService setAlias:weakSelf.user.account callbackSelector:nil object:nil];
-            
-            
             [MBProgressHUD dismissHUDForView:weakSelf.view];
-            
-            if ([NSKeyedArchiver archiveRootObject:weakSelf.user toFile:kUserInfoPath])
-            {
-                NSLog(@"用户信息更新成功！");
-            }
-            
-            
-            [(AppDelegate*)[[UIApplication sharedApplication] delegate] switchRootViewControllerWithType:RootViewControllerTypeTabBar];
-            [weakSelf.util refreshToken];
-            
-            [(AppDelegate *)[UIApplication sharedApplication].delegate dealRemoteNotificationPush];
-
+            [weakSelf.user serilization];
+            AppDelegate *delegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
+            [delegate switchRootViewController];
+            [delegate dealRemoteNotificationPush];
         }else{
-            
             [JPUSHService setAlias:@"" callbackSelector:nil object:nil];
             [MBProgressHUD dismissHUDForView:weakSelf.view withError:msg];
         }
@@ -268,9 +208,7 @@
 }
 
 - (IBAction)justLookingBtnAction:(UIButton *)sender {
-    
-    [self.appDelegate switchRootViewControllerWithType:RootViewControllerTypeMain];
-    
+    [self dismissViewControllerAnimated:true completion:nil];
 }
 
 

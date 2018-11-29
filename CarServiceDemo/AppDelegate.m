@@ -24,7 +24,7 @@
 @property (strong,nonatomic) NSArray *scrollImageArr;
 @property (strong,nonatomic) UIPageControl *scrollPage;
 @property (strong,nonatomic) UIButton *gotoLogin;
-@property (nonatomic ,assign)RootViewControllerType rootViewControllerType;
+
 @end
 
 @implementation AppDelegate
@@ -53,7 +53,7 @@
     self.window = [[UIWindow alloc] init];
     self.window.frame = [UIScreen mainScreen].bounds;
     self.window.backgroundColor = [UIColor whiteColor];
-    
+    [[UserInfo userInfo] readLocalData];
     //向微信注册,发起支付必须注册
     [WXApi registerApp:kWeXinKeyID enableMTA:YES];
     
@@ -84,7 +84,7 @@
     
     if (![ValidateUtil isEmptyStr:installType]&&[installType isEqualToString:@"1"]){
         //不是第一次安装,且没有更新
-        [self switchRootViewControllerWithType: RootViewControllerTypeLogin];
+        [self switchRootViewController];
         [self loadScrollViewImage];
     }else{
         UIViewController *emptyView = [[ UIViewController alloc ]init];
@@ -200,28 +200,10 @@
 
 
 #pragma mark - 切换window的显示根控制器
-- (void)switchRootViewControllerWithType:(RootViewControllerType)rootViewControllerType{
-    self.rootViewControllerType = rootViewControllerType;
-    if (rootViewControllerType ==
-        RootViewControllerTypeTabBar) {
-        self.window.rootViewController = self.tabBarVC;
-    }else if (rootViewControllerType ==
-              RootViewControllerTypeLogin) {
-        // 如果是登录页面 那就重新创建tabbar及主页面
-        self.tabBarVC = nil;
-        self.mainNavC = nil;
-        [JPUSHService setAlias:@"" callbackSelector:nil object:nil];
-        //登录的界面
-        LoginVC *loginVC = [[LoginVC alloc] init];
-        NavigationController *nav = [[NavigationController alloc] initWithRootViewController:loginVC];
-        self.window.rootViewController = nav;
-    }else if (rootViewControllerType ==
-              RootViewControllerTypeMain) {
-        self.window.rootViewController = self.tabBarVC;
-    }
+- (void)switchRootViewController {
+    self.window.rootViewController = [[TabBarViewController alloc] init];
     [self.window makeKeyAndVisible];
 }
-
 
 #pragma mark -- 初始化地图定位
 - (void)initCLLocationManager
@@ -232,42 +214,10 @@
         [[[CLLocationManager alloc] init] requestWhenInUseAuthorization];
         
     }else if ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusDenied) {
-        
-        //        NSLog(@"定位功能不可用，提示用户或忽略");
-        
-        //        kWeakSelf(weakSelf)
-        //        [LSConfirmAndCancelAlertView confirmAndCancelAlertViewWithTitle:@"定位失败，请打开定位开关" andDesc:@"定位服务未开启，请进入系统［设置］> [隐私] > [定位服务]中打开开关，并允许使用定位服务！" cancelText:@"取消" confirmText:@"设置" handel:^(AlertViewSelectState state) {
-        //            if(state == AlertViewSelectStateConfirm){
-        //
-        //                NSURL *url = [NSURL URLWithString:@"prefs:root=LOCATION_SERVICES"];
-        //
-        //                if ([[UIApplication sharedApplication] canOpenURL:url]) {
-        //
-        //                    [[UIApplication sharedApplication] openURL:url];
-        //
-        //                }else{
-        //
-        //                    [[UIApplication sharedApplication]openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
-        //                }
-        //
-        //            }
-        //            weakSelf.isShowConfirm = NO;
-        //
-        //        }];
-        
         UIAlertController *AC = [UIAlertController alertControllerWithTitle:@"定位失败，请打开定位开关！" message:@"定位服务未开启，请进入系统［设置］> [隐私] > [定位服务]中打开开关，并允许使用定位服务！" preferredStyle:UIAlertControllerStyleAlert];
         
         UIAlertAction *op = [UIAlertAction actionWithTitle:@"设置" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            //Location Services — prefs:root=LOCATION_SERVICES
-//            NSURL *url = [NSURL URLWithString:@"prefs:root=LOCATION_SERVICES"];
-            
-//            if ([[UIApplication sharedApplication] canOpenURL:url]) {
-//
-//                [[UIApplication sharedApplication] openURL:url];
-//
-//            }else{
-                [[UIApplication sharedApplication]openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
-//            }
+            [[UIApplication sharedApplication]openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
         }];
         
         UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
@@ -281,26 +231,19 @@
 
 #pragma mark - 登录界面
 - (void)gotoLoginView {
-    
-    UserInfo  *user=[UserInfo userInfo];
-    
+    UserInfo *user = [UserInfo userInfo];
     user.token = @"";
     user.name = @"";
-    //    user.mobile = @"";
-    
-    
-    if ([NSKeyedArchiver archiveRootObject:user toFile:kUserInfoPath])
-    {
+    user.user_id = @"";
+    if ([[NSFileManager defaultManager] fileExistsAtPath:kUserInfoPath]) {
+        [[NSFileManager defaultManager] removeItemAtPath:kUserInfoPath error:nil];
         NSLog(@"用户信息删除成功！");
     }
-    
     //延时,因为启动makeKeyAndVisible会调用这里,直接使用会导致window混乱
     dispatch_time_t delayTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.0000000001 * NSEC_PER_SEC));
     
     dispatch_after(delayTime, dispatch_get_main_queue(), ^{
-        
-        [self switchRootViewControllerWithType:RootViewControllerTypeLogin];
-        
+        [self switchRootViewController];
     });
     
 }
@@ -394,7 +337,7 @@
 
 - (void)immediatelyGotoLogin{
     [kUserDefault setObject:@"1" forKey:kIsFirstInstall];
-    [self switchRootViewControllerWithType:RootViewControllerTypeLogin];
+    [self switchRootViewController];
 }
 
 #pragma mark - 支付跳转相关

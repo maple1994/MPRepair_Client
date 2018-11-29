@@ -53,8 +53,7 @@ typedef void(^NetWorkStateChangeBlcok)(AFNetworkReachabilityStatus status);
  *  上传文件到服务器（带有上传进度和进度条展示）
  *
  *  @param urlString  url
- *  @param parameters 参数
- *  @param imageData  
+ *  @param parameters 参数 
  *  @param view       进度条所展示的view
  *  @param result     回调block
  */
@@ -64,7 +63,6 @@ typedef void(^NetWorkStateChangeBlcok)(AFNetworkReachabilityStatus status);
  *
  *  @param urlString  url
  *  @param parameters 参数
- *  @param imageData
  *  @param view       进度条所展示的view
  *  @param result     回调block
  */
@@ -89,10 +87,6 @@ typedef void(^NetWorkStateChangeBlcok)(AFNetworkReachabilityStatus status);
  根据绝对路径 post请求一个Dictionary 或 array
  */
 - (void)postDataWithAbsolutePath:(NSString *)path parameters:(NSDictionary *)parameters result:(void (^)(id obj,int  status,NSString *msg))result;
-
-
-///给webview的url添加一个版本号
-+ (NSString*)webViewUrlAppendVersion:(NSString*)url;
 
 - (void)refreshToken;
 

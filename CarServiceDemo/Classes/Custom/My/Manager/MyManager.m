@@ -57,7 +57,7 @@
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
     params[@"name"] = userName;
     params[@"phone"] = phone;
-    params[@"id"] = [NSString stringWithFormat:@"%ld", [UserInfo userInfo].uid];
+    params[@"id"] = [NSString stringWithFormat:@"%ld", [UserInfo userInfo].user_id];
     params[@"pic"] = encodedImageStr;
     
     //    kWeakSelf(weakSelf)
