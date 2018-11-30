@@ -103,7 +103,7 @@
        
         self.selectedPoi = currentPoi;
         
-        [self.delegate didPositionCellTapped];
+//        [self.delegate didPositionCellTapped];
         return ;
     }
     

@@ -87,7 +87,7 @@
 {
     if (!self.isMapViewRegionChangedFromTableView && self.mapView.userTrackingMode == MAUserTrackingModeNone)
     {
-        [self actionSearchAroundAt:self.mapView.centerCoordinate];
+        [self actionSearchAroundAt:mapView.centerCoordinate];
     }
     self.isMapViewRegionChangedFromTableView = NO;
 }
@@ -438,12 +438,6 @@
     request.requireExtension = YES;
     [self.search AMapPOIKeywordsSearch:request];
 }
-
-//- (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-//    cell.accessoryType = UITableViewCellAccessoryNone;
-//}
 
 #pragma mark - UITableView Datasource
 
