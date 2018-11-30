@@ -34,6 +34,7 @@
     [super viewDidLoad];
     [self loadAllView];
     [self loadAllData];
+    [_aboutOurButton addTarget:self action:@selector(preventHighlight) forControlEvents:UIControlEventAllEvents];
 }
 
 - (void)loadAllView{
@@ -108,6 +109,10 @@
 //    AboutOurWebController *aboutWebVC = [[AboutOurWebController alloc] init];
 //    aboutWebVC.urlStr = self.aboutUrlStr;
 //    [self.navigationController pushViewController:aboutWebVC animated:YES];
+}
+
+- (void)preventHighlight {
+    _aboutOurButton.highlighted = NO;
 }
 
 #pragma mark - 懒加载

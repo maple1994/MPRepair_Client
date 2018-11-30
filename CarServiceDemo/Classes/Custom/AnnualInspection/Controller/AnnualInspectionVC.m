@@ -26,9 +26,8 @@
     [super viewDidLoad];
     [self loadAllView];
     [self loadAllData];
-    
     [self requestDataFromUrl];
-    
+    [_gotoAboutAnnualInspectionBtn addTarget:self action:@selector(preventHighlight) forControlEvents:UIControlEventAllEvents];
 }
 
 - (void)loadAllView{
@@ -84,8 +83,6 @@
             [MBProgressHUD dismissHUDForView:weakSelf.view withError:msg];
         }
     }];
-    
-    
 }
 
 #pragma mark - 菜单点击事件
@@ -122,6 +119,10 @@
 #pragma mark - 进入关于年检
 - (IBAction)gotoAboutAnnualInspectionButtonAction:(id)sender {
     
+}
+
+- (void)preventHighlight {
+    _gotoAboutAnnualInspectionBtn.highlighted = NO;
 }
 
 #pragma mark - 懒加载
