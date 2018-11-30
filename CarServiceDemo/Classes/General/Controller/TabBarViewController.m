@@ -65,7 +65,11 @@ extern BOOL kCurrentState;
 #pragma mark - UITabBarControllerDelegate
 -(BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController {
     UINavigationController *nav = (UINavigationController *)viewController;
-    if ([nav.topViewController isKindOfClass: [MyVC class]] && ![UserInfo userInfo].isLogin) {
+    UIViewController *topVc = nav.topViewController;
+    if ([topVc isKindOfClass:[MyVC class]] || [topVc isKindOfClass:[HomePageVC class]]) {
+        [topVc.navigationController setNavigationBarHidden:YES animated:NO];
+    }
+    if ([topVc isKindOfClass: [MyVC class]] && ![UserInfo userInfo].isLogin) {
         LoginVC *vc = [[LoginVC alloc] init];
         NavigationController *nav = [[NavigationController alloc] initWithRootViewController:vc];
         [self presentViewController:nav animated:true completion:nil];

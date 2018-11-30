@@ -23,8 +23,7 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    [self.navigationController setNavigationBarHidden:YES];
-    
+    [self.navigationController setNavigationBarHidden:YES animated:YES];
 }
 
 - (void)viewDidDisappear:(BOOL)animated{
@@ -41,10 +40,6 @@
 
 - (void)loadAllView{
     [_backView addSubview:self.mainTableView];
-//    kWeakSelf(weakSelf)
-//    [self.mainTableView mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.top.with.left.with.bottom.with.right.mas_equalTo(weakSelf.backView);
-//    }];
 }
 
 - (void)loadAllData{

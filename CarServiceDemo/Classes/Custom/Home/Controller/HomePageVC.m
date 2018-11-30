@@ -407,7 +407,7 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    [self.navigationController setNavigationBarHidden:YES animated:NO];
+    [self.navigationController setNavigationBarHidden:YES animated:YES];
     if (@available(iOS 11.0, *)) {//防止Y轴偏移64像素
         
     } else {

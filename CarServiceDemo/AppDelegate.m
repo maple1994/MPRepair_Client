@@ -30,6 +30,7 @@
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    [[UITabBar appearance] setTranslucent:NO];
     [IQKeyboardManager sharedManager].enable = YES;
     [IQKeyboardManager sharedManager].shouldResignOnTouchOutside = YES;
     [IQKeyboardManager sharedManager].toolbarDoneBarButtonItemText = @"完成";

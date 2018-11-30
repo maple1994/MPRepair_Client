@@ -12,7 +12,7 @@
 #import "UIBarButtonItem+Extension.h"
 #import "BackButtonHandlerProtocol.h"
 
-@interface NavigationController ()
+@interface NavigationController ()<UIGestureRecognizerDelegate>
 
 @end
 
@@ -20,7 +20,6 @@
 
 + (void)initialize
 {
-    
     UINavigationBar *navBar = [UINavigationBar appearance];
     [navBar setBarTintColor:[UIColor colorWithRed:60/255.0 green:173/255.0 blue:255/255.0 alpha:1]];
     [navBar setTranslucent:NO];
@@ -29,6 +28,11 @@
     textAttributes[NSFontAttributeName]            = [UIFont systemFontOfSize:18.0];
     [navBar setTitleTextAttributes:textAttributes];
     navBar.barStyle = UIStatusBarStyleLightContent;
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    self.interactivePopGestureRecognizer.delegate = self;
 }
 
 
@@ -45,6 +49,7 @@
         navItem.imageEdgeInsets = UIEdgeInsetsMake(0, -30, 0, 0);
         navItem.frame = CGRectMake(0, 0, 50, 40);
         viewController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:navItem];
+        self.interactivePopGestureRecognizer.enabled = YES;
         viewController.hidesBottomBarWhenPushed = YES;
     }
     
@@ -70,6 +75,18 @@
         [self popViewControllerAnimated:YES];
     }
 
+}
+
+#pragma mark - UIGestureRecognizerDelegate
+- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
+    if (self.viewControllers.count <= 1) {
+        return NO;
+    }
+    return YES;
+}
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
+    return YES;
 }
 
 
