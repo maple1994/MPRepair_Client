@@ -63,8 +63,6 @@
     ///注册/初始化其他三方的SDK
     [self setupOtherSDKWithOptions:launchOptions];
     
-    [self initCLLocationManager];
-    
     NSString *installType = [kUserDefault objectForKey:kIsFirstInstall];
     
     if (![ValidateUtil isEmptyStr:installType]&&[installType isEqualToString:@"1"]){
@@ -187,32 +185,11 @@
     [self.window makeKeyAndVisible];
 }
 
-#pragma mark -- 初始化地图定位
-- (void)initCLLocationManager
-{
-    if ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusNotDetermined) {
-        
-        ///请求权限
-        [[[CLLocationManager alloc] init] requestWhenInUseAuthorization];
-        
-    }else if ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusDenied) {
-        UIAlertController *AC = [UIAlertController alertControllerWithTitle:@"定位失败，请打开定位开关！" message:@"定位服务未开启，请进入系统［设置］> [隐私] > [定位服务]中打开开关，并允许使用定位服务！" preferredStyle:UIAlertControllerStyleAlert];
-        
-        UIAlertAction *op = [UIAlertAction actionWithTitle:@"设置" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            [[UIApplication sharedApplication]openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
-        }];
-        
-        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
-        
-        [AC addAction:op];
-        [AC addAction:cancelAction];
-        
-        [[UIApplication sharedApplication].delegate.window.rootViewController presentViewController:AC animated:YES completion:nil];
-    }
-}
-
 #pragma mark - 登录界面
 - (void)gotoLoginView {
+    if (![UserInfo userInfo].isLogin) {
+        return;
+    }
     [[UserInfo userInfo] removeUserInfo];
     //延时,因为启动makeKeyAndVisible会调用这里,直接使用会导致window混乱
     dispatch_time_t delayTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.0000000001 * NSEC_PER_SEC));
