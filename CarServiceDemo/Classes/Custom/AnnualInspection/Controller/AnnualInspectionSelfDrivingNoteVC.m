@@ -325,6 +325,14 @@
     [datepicker show];
 }
 
+- (IBAction)tipsAction:(UIButton *)sender {
+    [ConfirmAndCancelAlertWebView confirmAndCancelAlertWebViewWithTitle:@"年检须知" WebUrl:@"http://www.nolasthope.cn/survey/surveyinfo/" ConfirmBtnIsShow:YES ConfirmBtnTitle:@"确定" ConfirmBtnTitleColor:[UIColor colorWithHexStringToRGB:@"3CADFF"] CancelBtnIsShow:NO CancelBtnTitle:@"" CancelBtnTitleColor:[UIColor colorWithHexStringToRGB:@"9B9B9B"] Handle:^(AlertViewSelectState selectState) {
+        if (selectState == AlertViewSelectStateConfirm) {
+            
+        }
+        
+    }];
+}
 
 #pragma mark -- 确认并支付按钮事件
 - (IBAction)payBtnAction:(id)sender {

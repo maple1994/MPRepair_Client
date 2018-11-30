@@ -36,7 +36,6 @@
 + (instancetype)confirmAndCancelAlertWebViewWithTitle:(NSString *)title WebUrl:(NSString *)urlStr ConfirmBtnIsShow:(BOOL)confirmBtnIsShow ConfirmBtnTitle:(NSString *)confirmBtnTitle ConfirmBtnTitleColor:(UIColor *)confirmBtnTitleColor CancelBtnIsShow:(BOOL)cancelBtnIsShow CancelBtnTitle:(NSString *)cancelBtnTitle CancelBtnTitleColor:(UIColor *)cancelTitleColor Handle:(ConfirmAndCancelSelectHandle)handle{
     
     ConfirmAndCancelAlertWebView *webView = [[[NSBundle mainBundle]loadNibNamed:NSStringFromClass([self class]) owner:self options:nil]firstObject];;
-
     [webView confirmAndCancelAlertWebViewWithTitle:title WebUrl:urlStr ConfirmBtnIsShow:confirmBtnIsShow ConfirmBtnTitle:confirmBtnTitle ConfirmBtnTitleColor:confirmBtnTitleColor CancelBtnIsShow:cancelBtnIsShow CancelBtnTitle:cancelBtnTitle CancelBtnTitleColor:cancelTitleColor Handle:handle];
     webView.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
     [[UIApplication sharedApplication].keyWindow.rootViewController.view addSubview:webView];
@@ -45,7 +44,7 @@
 }
 
 - (void)confirmAndCancelAlertWebViewWithTitle:(NSString *)title WebUrl:(NSString *)urlStr ConfirmBtnIsShow:(BOOL)confirmBtnIsShow ConfirmBtnTitle:(NSString *)confirmBtnTitle ConfirmBtnTitleColor:(UIColor *)confirmBtnTitleColor CancelBtnIsShow:(BOOL)cancelBtnIsShow CancelBtnTitle:(NSString *)cancelBtnTitle CancelBtnTitleColor:(UIColor *)cancelTitleColor Handle:(ConfirmAndCancelSelectHandle)handle{
-    
+    self.webView.backgroundColor = [UIColor whiteColor];
     [self.myContentView setCornerRadius:4];
     self.titleLabel.text = title;
     

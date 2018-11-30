@@ -107,10 +107,16 @@ static NSString *AnnualInspectionFeedbackDetailsTableViewCellID = @"AnnualInspec
 }
 
 - (IBAction)annualInspectionNoticeBtnAction:(id)sender {
-    QMWebViewVC *webVC = [[QMWebViewVC alloc]init];
-    webVC.title = @"年检须知";
-    webVC.urlStr = @"https:www.baidu.com";
-    [self.navigationController pushViewController:webVC animated:YES];
+    [ConfirmAndCancelAlertWebView confirmAndCancelAlertWebViewWithTitle:@"年检须知" WebUrl:@"http://www.nolasthope.cn/survey/surveyinfo/" ConfirmBtnIsShow:YES ConfirmBtnTitle:@"确定" ConfirmBtnTitleColor:[UIColor colorWithHexStringToRGB:@"3CADFF"] CancelBtnIsShow:NO CancelBtnTitle:@"" CancelBtnTitleColor:[UIColor colorWithHexStringToRGB:@"9B9B9B"] Handle:^(AlertViewSelectState selectState) {
+        if (selectState == AlertViewSelectStateConfirm) {
+            
+        }
+        
+    }];
+//    QMWebViewVC *webVC = [[QMWebViewVC alloc]init];
+//    webVC.title = @"年检须知";
+//    webVC.urlStr = @"http://www.nolasthope.cn/survey/surveyinfo/";
+//    [self.navigationController pushViewController:webVC animated:YES];
 }
 
 #pragma mark -- 确认支付按钮事件
