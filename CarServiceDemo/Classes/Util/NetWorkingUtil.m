@@ -539,7 +539,6 @@ static AFHTTPSessionManager *manager;
     ///判断状态数据的存在
     //下面为出错结果处理
     NSInteger code = [resultObj[@"code"] integerValue];
-    NSLog(@"%d", code);
     if (code != 100) { //bu正确
         if (code == 200) {
             statusInt = -1;

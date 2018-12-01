@@ -37,7 +37,7 @@ static NSString *imageCellID = @"MyOrderImageTableCell";
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.model.pic_list.count+1;
+    return self.model.pic_list.count + 1;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -57,7 +57,7 @@ static NSString *imageCellID = @"MyOrderImageTableCell";
             cell.affirmButton.hidden = YES;
         }
         cell.orderTypeLabel.hidden = YES;
-        
+        cell.imageLabel.hidden = (self.model.pic_list.count == 0);
         cell.nowModel = self.model;
         
         kWeakSelf(weakSelf)

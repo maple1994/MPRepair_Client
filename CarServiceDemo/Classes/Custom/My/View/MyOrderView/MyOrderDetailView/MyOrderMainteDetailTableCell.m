@@ -36,6 +36,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *payNumberLabel;
 @property (weak, nonatomic) IBOutlet UILabel *orderNumberLabel;
 @property (weak, nonatomic) IBOutlet UIButton *changeButton;
+@property (weak, nonatomic) IBOutlet UIView *imageArea;
 
 @end
 
@@ -115,6 +116,7 @@ static NSString *detailCellID = @"MyOrderProjectTableCell";
     //    _orderTypeLabel.text = [NSString stringWithFormat:@"订单类型：%@",_maintainModel.service_materials];
     _payNumberLabel.text = [NSString stringWithFormat:@"交易单号：%@",_maintainModel.deal_id];
     _orderNumberLabel.text = [NSString stringWithFormat:@"订单单号：%@",_maintainModel.order_id];
+    _imageArea.hidden = (arr.count == 0);
 }
 
 - (IBAction)deleteButtonAction:(id)sender {

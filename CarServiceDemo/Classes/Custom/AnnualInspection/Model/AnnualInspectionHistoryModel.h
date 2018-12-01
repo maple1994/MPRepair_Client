@@ -162,9 +162,9 @@
 /// 接单用户id
 @property (nonatomic ,copy)NSString *drive_user_id;
 /// 接单用户头像url
-@property (nonatomic ,copy)NSString *drive_user_pic_url;
+@property (nonatomic ,copy)NSString *driver_user_pic_url;
 /// 接单用户名称
-@property (nonatomic ,copy)NSString *drive_user_name;
+@property (nonatomic ,copy)NSString *driver_user_name;
 /// 接单用户联系电话
 @property (nonatomic ,copy)NSString *drive_user_phone;
 /// 司机评分
@@ -238,10 +238,6 @@
 @property (nonatomic ,copy)NSString *pic_get_confirm1_url;
 /// 取车图片-检车确认2照片url
 @property (nonatomic ,copy)NSString *pic_get_confirm2_url;
-///
-@property (nonatomic ,copy)NSString *driver_user_pic_url;
-///
-@property (nonatomic ,copy)NSString *driver_user_name;
 
 ///
 @property (nonatomic ,strong)NSArray <surveypic_list>*surveypic_list;

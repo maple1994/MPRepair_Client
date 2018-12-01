@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -39,7 +39,7 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="2000"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="u83-9Q-JSi">
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" translatesAutoresizingMaskIntoConstraints="NO" id="u83-9Q-JSi">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="2000"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Hr9-9w-R1P">
@@ -276,22 +276,22 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gEj-rK-jNF">
-                                                    <rect key="frame" x="155.5" y="142" width="64" height="10"/>
+                                                    <rect key="frame" x="153" y="142" width="69" height="10"/>
                                                     <subviews>
-                                                        <imageView hidden="YES" userInteractionEnabled="NO" tag="100" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="home_star" translatesAutoresizingMaskIntoConstraints="NO" id="W38-ql-rWg">
-                                                            <rect key="frame" x="0.0" y="1" width="8" height="8"/>
+                                                        <imageView userInteractionEnabled="NO" tag="100" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="home_star" translatesAutoresizingMaskIntoConstraints="NO" id="W38-ql-rWg">
+                                                            <rect key="frame" x="0.0" y="0.5" width="9" height="9"/>
                                                         </imageView>
-                                                        <imageView hidden="YES" userInteractionEnabled="NO" tag="101" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="home_star" translatesAutoresizingMaskIntoConstraints="NO" id="sZs-D1-Rgb">
-                                                            <rect key="frame" x="14" y="1" width="8" height="8"/>
+                                                        <imageView userInteractionEnabled="NO" tag="101" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="home_star" translatesAutoresizingMaskIntoConstraints="NO" id="sZs-D1-Rgb">
+                                                            <rect key="frame" x="15" y="0.5" width="9" height="9"/>
                                                         </imageView>
-                                                        <imageView hidden="YES" userInteractionEnabled="NO" tag="102" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="home_star" translatesAutoresizingMaskIntoConstraints="NO" id="jKl-eV-I9y">
-                                                            <rect key="frame" x="28" y="1" width="8" height="8"/>
+                                                        <imageView userInteractionEnabled="NO" tag="102" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="home_star" translatesAutoresizingMaskIntoConstraints="NO" id="jKl-eV-I9y">
+                                                            <rect key="frame" x="30" y="0.5" width="9" height="9"/>
                                                         </imageView>
-                                                        <imageView hidden="YES" userInteractionEnabled="NO" tag="103" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="home_star" translatesAutoresizingMaskIntoConstraints="NO" id="fXC-5P-ZSj">
-                                                            <rect key="frame" x="42" y="1" width="8" height="8"/>
+                                                        <imageView userInteractionEnabled="NO" tag="103" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="home_star" translatesAutoresizingMaskIntoConstraints="NO" id="fXC-5P-ZSj">
+                                                            <rect key="frame" x="45" y="0.5" width="9" height="9"/>
                                                         </imageView>
-                                                        <imageView hidden="YES" userInteractionEnabled="NO" tag="104" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="home_star" translatesAutoresizingMaskIntoConstraints="NO" id="WK8-ce-NID">
-                                                            <rect key="frame" x="56" y="1" width="8" height="8"/>
+                                                        <imageView userInteractionEnabled="NO" tag="104" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="home_star" translatesAutoresizingMaskIntoConstraints="NO" id="WK8-ce-NID">
+                                                            <rect key="frame" x="60" y="0.5" width="9" height="9"/>
                                                         </imageView>
                                                     </subviews>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -436,7 +436,6 @@
                                         <constraint firstItem="rw6-Tp-CfD" firstAttribute="top" secondItem="RJo-ya-JYa" secondAttribute="bottom" constant="32" id="J50-nu-8Gi"/>
                                         <constraint firstItem="RJo-ya-JYa" firstAttribute="leading" secondItem="844-yg-d7F" secondAttribute="leading" id="WxJ-H9-H9P"/>
                                         <constraint firstItem="RJo-ya-JYa" firstAttribute="top" secondItem="844-yg-d7F" secondAttribute="top" id="eWb-7a-Mzh"/>
-                                        <constraint firstAttribute="bottom" secondItem="rw6-Tp-CfD" secondAttribute="bottom" constant="22" id="shK-jP-woH"/>
                                     </constraints>
                                 </view>
                             </subviews>
@@ -483,6 +482,6 @@
         <image name="annualInspection_status_note_sel" width="25" height="28"/>
         <image name="annualInspection_status_start" width="32" height="28"/>
         <image name="defaultImage" width="154" height="154"/>
-        <image name="home_star" width="8" height="8"/>
+        <image name="home_star" width="9" height="9"/>
     </resources>
 </document>

@@ -88,18 +88,15 @@
 
 - (void)setupPublicData{
     
-    [NetWorkingUtil setImage:self.headerImageView url:self.dataModel.drive_user_pic_url defaultIconName:KDefaultImage];
-    self.nameLabel.text = self.dataModel.drive_user_name;
+    [NetWorkingUtil setImage:self.headerImageView url:self.dataModel.driver_user_pic_url defaultIconName:KDefaultImage];
+    self.nameLabel.text = self.dataModel.driver_user_name;
     self.mobileTF.text = self.dataModel.drive_user_phone;
     for (int i = 0 ; i < 5; i++) {
         UIImageView *imageView = [self.view viewWithTag:100+i];
         if (i < self.dataModel.drive_user_score.integerValue) {
-            
-            imageView.hidden = NO;
-            
+            imageView.image = [UIImage imageNamed:@"home_star"];
         }else{
-            
-            imageView.hidden = YES;
+            imageView.image = [UIImage imageNamed:@"home_star_none"];
         }
         
     }
