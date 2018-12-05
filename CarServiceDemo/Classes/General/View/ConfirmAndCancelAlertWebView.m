@@ -38,7 +38,7 @@
     ConfirmAndCancelAlertWebView *webView = [[[NSBundle mainBundle]loadNibNamed:NSStringFromClass([self class]) owner:self options:nil]firstObject];;
     [webView confirmAndCancelAlertWebViewWithTitle:title WebUrl:urlStr ConfirmBtnIsShow:confirmBtnIsShow ConfirmBtnTitle:confirmBtnTitle ConfirmBtnTitleColor:confirmBtnTitleColor CancelBtnIsShow:cancelBtnIsShow CancelBtnTitle:cancelBtnTitle CancelBtnTitleColor:cancelTitleColor Handle:handle];
     webView.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
-    [[UIApplication sharedApplication].keyWindow.rootViewController.view addSubview:webView];
+    [[UIApplication sharedApplication].keyWindow addSubview:webView];
     return webView;
     
 }

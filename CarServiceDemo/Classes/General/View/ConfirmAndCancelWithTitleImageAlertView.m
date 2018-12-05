@@ -39,7 +39,7 @@
 
     [webView confirmAndCancelWithTitleImageAlertViewWithTitle:title ImageName:imageName ConfirmBtnIsShow:confirmBtnIsShow ConfirmBtnTitle:confirmBtnTitle ConfirmBtnTitleColor:confirmBtnTitleColor CancelBtnIsShow:cancelBtnIsShow CancelBtnTitle:cancelBtnTitle CancelBtnTitleColor:cancelTitleColor Handle:handle];
     webView.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
-    [[UIApplication sharedApplication].keyWindow.rootViewController.view addSubview:webView];
+    [[UIApplication sharedApplication].keyWindow addSubview:webView];
     return webView;
     
 }
