@@ -617,7 +617,7 @@ static NSString *PackageSelectionCollectionViewCellID = @"PackageSelectionCollec
         self.packageAView.hidden = YES;
         self.packageAViewHeight.constant = 0;
         self.packageBView.hidden = NO;
-        self.packageAViewHeight.constant = [self getPackageAViewHeightWithContent:self.packageBDetailsLabel.text];
+        self.packageBViewHeight.constant = [self getPackageAViewHeightWithContent:self.packageBDetailsLabel.text];
 
 //        self.packageBViewHeight.constant = [self getPackageBViewHeight];
 //        [self.packageSelectionCollectionView reloadData];
