@@ -138,7 +138,7 @@
         }
     }
     
-    NSLog(@"poi :%@", poi.address);
+//    NSLog(@"poi :%@", poi.address);
 }
 
 - (MAAnnotationView *)mapView:(MAMapView *)mapView viewForAnnotation:(id<MAAnnotation>)annotation
@@ -272,7 +272,7 @@
 {
     if (response.regeocode != nil)
     {
-        NSLog(@"%@-- %@",response.regeocode.addressComponent,response.regeocode.addressComponent.city);
+//        NSLog(@"%@-- %@",response.regeocode.addressComponent,response.regeocode.addressComponent.city);
         self.currentCityLabel.text = response.regeocode.addressComponent.city;
         self.user.currentCity = response.regeocode.addressComponent.city;
         //解析response获取地址描述，具体解析见 Demo
