@@ -236,7 +236,7 @@
     [self.mapView setDesiredAccuracy:kCLLocationAccuracyHundredMeters];
     [self.mapView setDistanceFilter:kCLLocationAccuracyNearestTenMeters];
 //    [self.mapView setCenterCoordinate:userLocation.coordinate];
-    [self.mapView setZoomLevel:17.0 animated:NO];
+    [self.mapView setZoomLevel:11.0 animated:NO];
     [self.mapContentView sendSubviewToBack:self.mapView];
     [self.mapContentView addSubview:self.mapView];
     
