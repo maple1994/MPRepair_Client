@@ -347,20 +347,21 @@
 - (void)setUpSelectRepairShopInfo{
     self.addressLabel.text =[NSString stringWithFormat:@"距您%.01f公里   %@", self.selectRepairShopInfoModel.distance.floatValue,self.selectRepairShopInfoModel.address] ;
     self.nameLabel.text = self.selectRepairShopInfoModel.name;
+    if (self.baoYangBtn.isSelected) {
+        // 保养
+        self.typeLabel.text = @"汽车保养";
+    }else {
+        // 维修
+        self.typeLabel.text = @"汽车维修";
+    }
     for (int i = 0 ; i < 5; i++) {
         UIImageView *imageView = [self.view viewWithTag:100+i];
         if (i < self.selectRepairShopInfoModel.score.integerValue) {
-            
-            imageView.hidden = NO;
-            
+            imageView.image = [UIImage imageNamed:@"home_star"];
         }else{
-            
-            imageView.hidden = YES;
+            imageView.image = [UIImage imageNamed:@"home_star_none"];
         }
-        
     }
-    
-    
 }
 
 #pragma mark -- 初始化百度地图定位
@@ -607,8 +608,6 @@
         
         [self.navigationController pushViewController:maintainVC animated:YES];
     }
-    
-   
 }
 
 - (IBAction)gotoOrderMaintainVCBtnAction:(UIButton *)sender {
