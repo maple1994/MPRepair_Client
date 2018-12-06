@@ -123,13 +123,10 @@
 
 - (void)mapView:(MAMapView *)mapView didSelectAnnotationView:(MAAnnotationView *)view
 {
-    
     if ([view isMemberOfClass:[LocationAnnotationView class]]) {
         return;
     }
-    
     CustonMAPointAnnotation *poi =(CustonMAPointAnnotation *)view.annotation;
-//    NSString *title = [NSString stringWithFormat:@"%@",poi.title];
     for (RepairShopInfoModel *model in self.repairShopInfoDataArr) {
         if ([model.ID isEqualToString:poi.ID]) {
             self.selectRepairShopInfoModel = model;
@@ -137,8 +134,6 @@
             break;
         }
     }
-    
-//    NSLog(@"poi :%@", poi.address);
 }
 
 - (MAAnnotationView *)mapView:(MAMapView *)mapView viewForAnnotation:(id<MAAnnotation>)annotation
@@ -152,7 +147,20 @@
             annotationView = [[MAAnnotationView alloc] initWithAnnotation:annotation
                                                           reuseIdentifier:reuseIndetifier];
         }
-        annotationView.image = [UIImage imageNamed:@"location"];
+        CustonMAPointAnnotation *anno = (CustonMAPointAnnotation *)annotation;
+        UIImage *image = nil;
+        if (self.baoYangBtn.isSelected) {
+            // 显示保养
+            if (anno.type == 0 || anno.type == 2) {
+                image = [UIImage imageNamed:@"home_location_blue"];
+            }
+        }else {
+            // 显示维修
+            if (anno.type == 0 || anno.type == 1) {
+                image = [UIImage imageNamed:@"home_location_red"];
+            }
+        }
+        annotationView.image = image;
         //设置中心点偏移，使得标注底部中间点成为经纬度对应点
         annotationView.centerOffset = CGPointMake(0, -18);
         return annotationView;
@@ -182,16 +190,12 @@
 /* POI 搜索回调. */
 - (void)onPOISearchDone:(AMapPOISearchBaseRequest *)request response:(AMapPOISearchResponse *)response
 {
-    
-    [self.mapView removeAnnotations:self.mapView.annotations];
-    
     if (response.pois.count == 0)
     {
         return;
     }
-    
+    [self.mapView removeAnnotations:self.mapView.annotations];
     NSMutableArray *poiAnnotations = [NSMutableArray arrayWithCapacity:response.pois.count];
-    
     [response.pois enumerateObjectsUsingBlock:^(AMapPOI *obj, NSUInteger idx, BOOL *stop) {
         
         POIAnnotation *anno = [[POIAnnotation alloc] initWithPOI:obj];
@@ -255,10 +259,12 @@
     {
         _locationAnnotationView.rotateDegree = userLocation.heading.trueHeading - _mapView.rotationDegree;
         self.currentLocation = userLocation;
-        [self requestRepairShopInfo];
         AMapReGeocodeSearchRequest *regeo = [[AMapReGeocodeSearchRequest alloc] init];
         regeo.location = [AMapGeoPoint locationWithLatitude:userLocation.coordinate.latitude longitude:userLocation.coordinate.longitude];
         regeo.requireExtension = YES;
+        if (self.repairShopInfoDataArr.count == 0) {
+            [self requestRepairShopInfo];
+        }
         [self.search AMapReGoecodeSearch:regeo];
     }
 }
@@ -287,25 +293,19 @@
 
 - (void)initSearch
 {
-    
-//    NSMutableArray *paramsArr = [NSMutableArray array];
-//    for (int i = 0 ; i< 100 ; i ++) {
-//        NSMutableDictionary *params = [NSMutableDictionary dictionary];
-//        params[@"lat"] = @((23.139226 + (0.001 * i)));
-//        params[@"lng"] = @((113.33214 + (0.001 * i)));
-//        params[@"titlte"] = @((113.33214 + (0.001 * i)));
-//        [paramsArr addObject:params];
-//    }
-    
-//    [self.mapView reloadMap];
-    
     if (self.repairShopInfoDataArr.count > 0) {
         [self.mapView removeOverlays:self.mapView.overlays];
         [self.mapView removeAnnotations:self.mapView.annotations];
         
         for (int i =0 ;i < self.repairShopInfoDataArr.count ; i++) {
             RepairShopInfoModel *model = self.repairShopInfoDataArr[i];
-
+            if (self.baoYangBtn.isSelected && model.type == 1) {
+                // 只显示保养
+                continue;
+            }else if (self.weiXiuBtn.isSelected && model.type == 2) {
+                // 只显示维修
+                continue;
+            }
             CustonMAPointAnnotation *pointAnnotation = [[CustonMAPointAnnotation alloc] init];
 
             CLLocationDegrees lat = [model.latitude doubleValue];
@@ -315,12 +315,9 @@
             pointAnnotation.subtitle = model.address;
             pointAnnotation.address =model.address;
             pointAnnotation.mobi =model.mobile_phone;
-            //        pointAnnotation.star =params[@"titlte"];
-            //        pointAnnotation.juli =model.ju;
             pointAnnotation.ID =model.ID;
+            pointAnnotation.type = model.type;
             [self.mapView addAnnotation:pointAnnotation];
-
-
         }
         if (!self.selectRepairShopInfoModel) {
             if (self.repairShopInfoDataArr.count > 0) {
@@ -493,16 +490,11 @@
 
 #pragma mark -- 请求维修点信息
 - (void)requestRepairShopInfo{
-    
     kWeakSelf(weakSelf);
-    
-//    [MBProgressHUD showStatusOnView:self.view withMessage:LoadingMsg];
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
     params[@"orderby"] = @"all";
-
     params[@"latitude"] = @(self.currentLocation.coordinate.latitude);
     params[@"longitude"] = @(self.currentLocation.coordinate.longitude);
-
     [self.util getDataWithPath:@"/api/maintain/garage/" parameters:params result:^(id obj, int status, NSString *msg) {
         if (status == 1) {
             weakSelf.repairShopInfoDataArr = nil;
@@ -513,13 +505,7 @@
                 }
             }
             [weakSelf initSearch];
-            
-//            [MBProgressHUD dismissHUDForView:weakSelf.view];
-            
         }else{
-            
-//            [MBProgressHUD dismissHUDForView:weakSelf.view];
-
         }
     }];
     
@@ -574,9 +560,12 @@
 
 
 - (IBAction)scheduledRepairBtnAction:(UIButton *)sender {
-    sender.selected = !sender.selected;
+    if(sender.isSelected) {
+        return;
+    }
+    sender.selected = YES;
     self.baoYangBtn.selected = NO;
-
+    [self initSearch];
 }
 
 
@@ -623,9 +612,12 @@
 }
 
 - (IBAction)gotoOrderMaintainVCBtnAction:(UIButton *)sender {
-    sender.selected = !sender.selected;
+    if (sender.isSelected) {
+        return;
+    }
+    sender.selected = YES;
     self.weiXiuBtn.selected = NO;
-    
+    [self initSearch];
 }
 
 

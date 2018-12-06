@@ -42,6 +42,7 @@
 @property (nonatomic ,copy)NSString *filter_price;
 /// 距离
 @property (nonatomic ,copy)NSString *distance;
-
 @property (nonatomic ,copy)NSString *score;
+/// 类型：0既可以维修又可以保养，1只维修，2只保养
+@property (nonatomic, assign) NSInteger type;
 @end
