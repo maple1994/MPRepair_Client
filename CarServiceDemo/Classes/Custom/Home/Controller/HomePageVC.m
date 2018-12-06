@@ -18,6 +18,7 @@
 #import "LocationAnnotationView.h"
 #import "CustonMAPointAnnotation.h"
 #import <MapKit/MapKit.h>
+#import <AMapLocationKit/AMapLocationKit.h>
 
 #import "ScheduledRepairVC.h"
 #import "ServicePointDetailsVC.h"
@@ -60,7 +61,7 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *selectRepairShopInfoViewHeight;
 
 /// 当前定位
-@property (nonatomic ,strong)MAUserLocation *currentLocation;
+@property (nonatomic ,strong)CLLocation *currentLocation;
 
 
 @property (weak, nonatomic) IBOutlet UIButton *weiXiuBtn;
@@ -79,6 +80,7 @@
 ///
 @property (nonatomic ,copy)NSString *selectedRepairShopID;
 @property (nonatomic, strong) AMapNaviCompositeManager *mgr;
+@property (nonatomic, strong) AMapLocationManager *locMgr;
 @end
 
 @implementation HomePageVC
@@ -104,6 +106,13 @@
     return _vehicleViolationInfoDataArr;
 }
 
+- (AMapLocationManager *)locMgr {
+    if (_locMgr == nil) {
+        _locMgr = [[AMapLocationManager alloc] init];
+    }
+    return _locMgr;
+}
+
 - (void)searchPoiKeyword:(NSString *)keyword
 {
     AMapPOIKeywordsSearchRequest *request = [[AMapPOIKeywordsSearchRequest alloc] init];
@@ -113,7 +122,7 @@
     [self.search AMapPOIKeywordsSearch:request];
 }
 
-- (void)setCurrentLocation:(MAUserLocation *)currentLocation {
+- (void)setCurrentLocation:(CLLocation *)currentLocation {
     _currentLocation = currentLocation;
     self.user.latitude = _currentLocation.coordinate.latitude;
     self.user.longtitude = _currentLocation.coordinate.longitude;
@@ -233,6 +242,21 @@
     
     self.search = [[AMapSearchAPI alloc] init];
     self.search.delegate = self;
+    kWeakSelf(weakSelf);
+    [self.locMgr requestLocationWithReGeocode:YES completionBlock:^(CLLocation *location, AMapLocationReGeocode *regeocode, NSError *error) {
+        if (error) {
+            NSLog(@"%@", error);
+            return;
+        }
+        weakSelf.currentLocation = location;
+        AMapReGeocodeSearchRequest *regeo = [[AMapReGeocodeSearchRequest alloc] init];
+        regeo.location = [AMapGeoPoint locationWithLatitude:location.coordinate.latitude longitude:location.coordinate.longitude];
+        regeo.requireExtension = YES;
+        if (self.repairShopInfoDataArr.count == 0) {
+            [self requestRepairShopInfo];
+        }
+        [self.search AMapReGoecodeSearch:regeo];
+    }];
 }
 
 - (MAOverlayRenderer *)mapView:(MAMapView *)mapView rendererForOverlay:(id <MAOverlay>)overlay
@@ -258,7 +282,7 @@
     if (!updatingLocation && _locationAnnotationView != nil)
     {
         _locationAnnotationView.rotateDegree = userLocation.heading.trueHeading - _mapView.rotationDegree;
-        self.currentLocation = userLocation;
+        self.currentLocation = userLocation.location;
         AMapReGeocodeSearchRequest *regeo = [[AMapReGeocodeSearchRequest alloc] init];
         regeo.location = [AMapGeoPoint locationWithLatitude:userLocation.coordinate.latitude longitude:userLocation.coordinate.longitude];
         regeo.requireExtension = YES;
