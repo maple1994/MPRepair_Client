@@ -54,6 +54,8 @@ typedef NS_ENUM(NSUInteger, UpkeepState) {
 @property (copy, nonatomic) NSString *car_brand;
 @property (copy, nonatomic) NSString *car_code;
 @property (copy, nonatomic) NSString *project_material;
+/// 是否可以售后
+@property (copy, nonatomic) NSString *is_aftersales;
 @property (strong, nonatomic) NSArray<ImageObjectModel> *upkeeppic_set;
 
 @end

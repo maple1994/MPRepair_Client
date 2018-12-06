@@ -59,7 +59,10 @@ typedef NS_ENUM(NSUInteger, MaintainType) {
 @property (copy, nonatomic) NSString *service_materials;
 @property (copy, nonatomic) NSString *deal_id;
 @property (copy, nonatomic) NSString *order_id;
+/// 是否设置维修清单
 @property (copy, nonatomic) NSString *is_setting;
+/// 是否可以售后
+@property (copy, nonatomic) NSString *is_aftersales;
 @property (copy, nonatomic) NSString *order_name;
 @property (copy, nonatomic) NSString *order_pic_url;
 

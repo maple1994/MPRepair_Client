@@ -58,10 +58,15 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    if (self.dataModel.is_feedback) {
-        [self.complaintBtn setTitle:@"已投诉" forState:UIControlStateNormal];
-    }else{
-        [self.complaintBtn setTitle:@"投诉" forState:UIControlStateNormal];
+    if ([self.dataModel.state isEqualToString:@"8"]) {
+        if (self.dataModel.is_feedback) {
+            [self.complaintBtn setTitle:@"已投诉" forState:UIControlStateNormal];
+        }else{
+            [self.complaintBtn setTitle:@"投诉" forState:UIControlStateNormal];
+        }
+        [self.complaintBtn setHidden:NO];
+    }else {
+        [self.complaintBtn setHidden:YES];
     }
 }
 

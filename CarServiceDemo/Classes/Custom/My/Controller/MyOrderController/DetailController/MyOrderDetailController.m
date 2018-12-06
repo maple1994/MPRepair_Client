@@ -43,7 +43,7 @@
     if (self.isUpkeep) {
         [OrderManager getUpkeepDetailDataWithID:self.orderID successBlock:^(id obj) {
             weakSelf.mainTableView.upkeepModel = obj;
-            if (weakSelf.mainTableView.upkeepModel.state == UpkeepStateSuccess) {
+            if ([weakSelf.mainTableView.upkeepModel.is_aftersales isEqualToString:@"1"]) {
                 [weakSelf addRightAfterService];
             }
         } failBlock:^(id error) {
@@ -52,7 +52,7 @@
     }else{
         [OrderManager getMaintainDetailDataWithID:self.orderID successBlock:^(id obj) {
             weakSelf.mainTableView.maintainModel = obj;
-            if (weakSelf.mainTableView.maintainModel.state == MaintainTypeSuccess) {
+            if ([weakSelf.mainTableView.maintainModel.is_aftersales isEqualToString:@"1"]) {
                 [weakSelf addRightAfterService];
             }
         } failBlock:^(id error) {
