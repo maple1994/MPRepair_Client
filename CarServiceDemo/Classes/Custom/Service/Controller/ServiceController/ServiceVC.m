@@ -50,7 +50,7 @@
     }
     if (self.user.is_pass) {
         self.menuView.hidden = NO;
-        self.menuViewHeight.constant = 185;
+        self.menuViewHeight.constant = 195;
         
     }else{
         self.menuView.hidden = YES;
